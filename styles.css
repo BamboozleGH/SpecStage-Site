@@ -146,24 +146,20 @@ img, svg { display: block; max-width: 100%; }
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
 }
-/* Bullet 2 emphasis — quiet scale-pop on the whole phrase, plus a
-   weight shift on the word "engineers" (both occurrences). Reads as
-   confident, considered, no extra visual furniture. */
+/* Bullet 2 emphasis — quiet scale-pop on the whole phrase plus a
+   weight + colour shift on every word inside it ('by engineers, for
+   engineers'). Reads as confident, considered, no extra furniture. */
 .endorse {
   display: inline-block;
   transform-origin: center center;
-}
-.endorse .emph {
   font-weight: 400;
   color: var(--ink-soft);
   transition: font-weight 0.3s ease-out, color 0.4s ease-out;
 }
 .hero-points.chips-go .endorse {
-  animation: endorse-pop 0.7s cubic-bezier(.2,.8,.2,1.2) 0.45s both;
-}
-.hero-points.chips-go .endorse .emph {
   font-weight: 600;
   color: var(--ink);
+  animation: endorse-pop 0.7s cubic-bezier(.2,.8,.2,1.2) 0.45s both;
   transition-delay: 0.55s;
 }
 @keyframes endorse-pop {
@@ -172,8 +168,12 @@ img, svg { display: block; max-width: 100%; }
   100% { transform: scale(1);    }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-points.chips-go .endorse { animation: none; }
-  .endorse .emph { transition: none; font-weight: 600; color: var(--ink); }
+  .hero-points.chips-go .endorse {
+    animation: none;
+    transition: none;
+    font-weight: 600;
+    color: var(--ink);
+  }
 }
 
 /* Horizontal gradient used to highlight AI-related phrasing in hero copy.
