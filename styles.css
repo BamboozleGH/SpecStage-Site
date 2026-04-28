@@ -121,10 +121,10 @@ img, svg { display: block; max-width: 100%; }
    the .hero p specificity trap below — not because we widen the hero alone. */
 .hero-inner { /* defers to .wrap */ }
 .hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
   color: var(--muted);
-  padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
+  padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
   margin-bottom: 28px;
 }
 /* Brand mark inside the eyebrow pill — small bracket icon with three
@@ -132,7 +132,7 @@ img, svg { display: block; max-width: 100%; }
    loader, scaled down). Used on every page eyebrow so the SpecStage
    bracket appears throughout the brand language. */
 .eyebrow-mark {
-  height: 13px;
+  height: 17px;
   width: auto;
   flex-shrink: 0;
   fill: currentColor;
