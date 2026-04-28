@@ -12,6 +12,17 @@ if (topbar) {
   onScroll();
 }
 
+// ── Hero chip animation: strike-through DEL, highlight ADD ──────
+// Adds .chips-go to each .hero-points after a brief pause so visitors
+// see the neutral state momentarily, then watch decisions resolve.
+(() => {
+  const groups = document.querySelectorAll('.hero-points');
+  if (!groups.length) return;
+  const start = () => groups.forEach(el => el.classList.add('chips-go'));
+  // Wait until layout has settled and the user has had a tick to land.
+  setTimeout(start, 450);
+})();
+
 // ── Reveal-on-scroll (Intersection Observer) ────────────────────
 const revealEls = document.querySelectorAll('.reveal');
 if (revealEls.length && 'IntersectionObserver' in window) {
