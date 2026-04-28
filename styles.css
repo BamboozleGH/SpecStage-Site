@@ -504,14 +504,64 @@ img, svg { display: block; max-width: 100%; }
 .apply-status.ok    { background: rgba(26, 122, 62, 0.08);  color: #1a5a2e; border: 1px solid rgba(26, 122, 62, 0.25); }
 .apply-status.err   { background: rgba(192, 57, 43, 0.06);  color: #8a2820; border: 1px solid rgba(192, 57, 43, 0.25); }
 
+/* ── Loading state during form submission ────────────────────────── */
+.apply-form { position: relative; }
+.apply-loading {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 16px;
+  border-radius: 8px;
+  z-index: 10;
+  animation: loading-fade-in 0.18s ease-out;
+}
+@keyframes loading-fade-in { from { opacity: 0; } to { opacity: 1; } }
+.apply-loading p {
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.bracket-loader { width: 110px; height: auto; display: block; }
+.bracket-loader .dot {
+  opacity: 0.18;
+  transform-origin: center;
+  animation: dot-pulse 1.4s infinite ease-in-out;
+}
+.bracket-loader .dot-1 { animation-delay: 0s; }
+.bracket-loader .dot-2 { animation-delay: 0.16s; }
+.bracket-loader .dot-3 { animation-delay: 0.32s; }
+@keyframes dot-pulse {
+  0%, 80%, 100% { opacity: 0.18; transform: scale(1);    }
+  40%           { opacity: 1;    transform: scale(1.18); }
+}
+
+/* ── Success state ───────────────────────────────────────────────── */
 .apply-success {
   padding: 32px;
   background: var(--paper-soft);
   border: 1px solid var(--line);
   border-radius: 8px;
+  text-align: center;
 }
+.success-mark {
+  width: 110px; height: auto;
+  display: block;
+  margin: 0 auto 18px;
+  animation: success-pop 0.5s cubic-bezier(.2,.8,.2,1.2) both;
+}
+.success-mark .check {
+  stroke-dasharray: 70;
+  stroke-dashoffset: 70;
+  animation: check-draw 0.45s 0.25s ease-out forwards;
+}
+@keyframes success-pop  { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes check-draw   { to   { stroke-dashoffset: 0; } }
 .apply-success h3 { font-size: 22px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
-.apply-success p  { color: var(--ink-soft); line-height: 1.6; margin: 0; }
+.apply-success p  { color: var(--ink-soft); line-height: 1.6; margin: 0; max-width: 520px; margin-inline: auto; }
 
 .apply-after {
   display: grid;

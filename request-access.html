@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="/styles.css?v=33">
+  <link rel="stylesheet" href="/styles.css?v=34">
 
   <script>window.GA_MEASUREMENT_ID = 'G-NXYJVHPJW2';</script>
 </head>
@@ -138,6 +138,25 @@
 
             <div class="apply-status" id="apply-status" style="display:none" role="status" aria-live="polite"></div>
 
+            <!-- Loading overlay shown by site.js while the form is submitting -->
+            <div class="apply-loading" id="apply-loading" hidden role="status" aria-live="polite">
+              <svg class="bracket-loader" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <!-- Left bracket -->
+                <rect x="0"   y="0"  width="6"  height="80" fill="#0a0a0a"/>
+                <rect x="0"   y="0"  width="22" height="6"  fill="#0a0a0a"/>
+                <rect x="0"   y="74" width="22" height="6"  fill="#0a0a0a"/>
+                <!-- Right bracket -->
+                <rect x="194" y="0"  width="6"  height="80" fill="#0a0a0a"/>
+                <rect x="178" y="0"  width="22" height="6"  fill="#0a0a0a"/>
+                <rect x="178" y="74" width="22" height="6"  fill="#0a0a0a"/>
+                <!-- Three pulsing dots inside -->
+                <circle class="dot dot-1" cx="74"  cy="40" r="8" fill="#0a0a0a"/>
+                <circle class="dot dot-2" cx="100" cy="40" r="8" fill="#0a0a0a"/>
+                <circle class="dot dot-3" cx="126" cy="40" r="8" fill="#0a0a0a"/>
+              </svg>
+              <p>Sending application…</p>
+            </div>
+
           </form>
 
         </div>
@@ -202,6 +221,6 @@
     </div>
   </div>
 
-  <script src="/site.js?v=33" defer></script>
+  <script src="/site.js?v=34" defer></script>
 </body>
 </html>

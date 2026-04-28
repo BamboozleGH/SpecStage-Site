@@ -24,8 +24,9 @@ if (topbar) {
   // honeypot field and Formspree's own filtering.
   const renderedAt = Date.now();
 
-  const status = document.getElementById('apply-status');
-  const submitBtn = form.querySelector('button[type="submit"]');
+  const status      = document.getElementById('apply-status');
+  const loading     = document.getElementById('apply-loading');
+  const submitBtn   = form.querySelector('button[type="submit"]');
 
   function showStatus(kind, msg) {
     if (!status) return;
@@ -33,6 +34,33 @@ if (topbar) {
     status.textContent = msg;
     status.style.display = '';
   }
+
+  function showLoading() {
+    if (loading) loading.hidden = false;
+    submitBtn.disabled = true;
+  }
+  function hideLoading() {
+    if (loading) loading.hidden = true;
+    submitBtn.disabled = false;
+  }
+
+  // Markup for the success state — bracket icon with an animated check inside
+  const successHtml = `
+    <div class="apply-success" role="status" aria-live="polite">
+      <svg class="success-mark" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="0"   y="0"  width="6"  height="80" fill="#1a7a3e"/>
+        <rect x="0"   y="0"  width="22" height="6"  fill="#1a7a3e"/>
+        <rect x="0"   y="74" width="22" height="6"  fill="#1a7a3e"/>
+        <rect x="194" y="0"  width="6"  height="80" fill="#1a7a3e"/>
+        <rect x="178" y="0"  width="22" height="6"  fill="#1a7a3e"/>
+        <rect x="178" y="74" width="22" height="6"  fill="#1a7a3e"/>
+        <path class="check" d="M 70 42 L 92 60 L 132 22"
+              stroke="#1a7a3e" stroke-width="7" fill="none"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3>Application sent.</h3>
+      <p>Thanks — we'll read it personally and respond within a few business days. If you don't hear back, write to <a href="mailto:hello@specstage.com">hello@specstage.com</a>.</p>
+    </div>`;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -46,10 +74,8 @@ if (topbar) {
     // Bot speed check — discard submissions made implausibly quickly
     if (Date.now() - renderedAt < 2000) return;
 
-    submitBtn.disabled = true;
-    const originalLabel = submitBtn.innerHTML;
-    submitBtn.textContent = 'Sending…';
     if (status) status.style.display = 'none';
+    showLoading();
 
     try {
       const res = await fetch(form.action, {
@@ -59,32 +85,24 @@ if (topbar) {
       });
 
       if (res.ok) {
-        // Replace the form with a clean confirmation block
-        form.outerHTML = `
-          <div class="apply-success" role="status" aria-live="polite">
-            <h3>Application received.</h3>
-            <p>Thanks — we'll read it personally and respond within a few business days. If you don't hear back, write to <a href="mailto:hello@specstage.com">hello@specstage.com</a>.</p>
-          </div>`;
+        // Replace the entire form with the success card
+        form.outerHTML = successHtml;
       } else {
         let errMsg = 'Something went wrong. Please try again, or email hello@specstage.com directly.';
         try {
           const data = await res.json();
           if (data && data.error) {
-            // Cloudflare Pages Function returns { ok:false, error:'...' }
-            errMsg = data.error;
+            errMsg = data.error;                    // Cloudflare Function shape
           } else if (data && data.errors && data.errors[0] && data.errors[0].message) {
-            // Formspree-style fallback for any service that returns this shape
-            errMsg = data.errors[0].message;
+            errMsg = data.errors[0].message;        // Formspree-style fallback
           }
         } catch {}
+        hideLoading();
         showStatus('err', errMsg);
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalLabel;
       }
     } catch (err) {
+      hideLoading();
       showStatus('err', 'Network error. Please try again, or email hello@specstage.com directly.');
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalLabel;
     }
   });
 })();
