@@ -279,6 +279,41 @@ img, svg { display: block; max-width: 100%; }
   color: var(--ink-soft); max-width: 640px; margin-bottom: 56px;
 }
 
+/* ── "Why this matters" pain list ─────────────────────────────────── */
+.pain-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 32px;
+  max-width: 720px;
+}
+.pain-list li {
+  position: relative;
+  padding: 14px 0 14px 32px;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(15px, 1.2vw, 17.5px);
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.pain-list li:last-child { border-bottom: none; }
+.pain-list li::before {
+  /* Subtle dash marker — quietly evokes the bracket/strike-through motif */
+  content: '';
+  position: absolute;
+  left: 0; top: 26px;
+  width: 18px; height: 1.5px;
+  background: var(--ink);
+  opacity: 0.45;
+}
+.section-closer {
+  font-size: clamp(17px, 1.4vw, 20px);
+  color: var(--ink);
+  font-weight: 500;
+  max-width: 700px;
+  line-height: 1.45;
+  margin-top: 28px;
+  letter-spacing: -0.01em;
+}
+
 /* ── Capability cards ─────────────────────────────────────────────── */
 .cards {
   display: grid; gap: 1px;
