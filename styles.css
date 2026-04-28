@@ -146,24 +146,34 @@ img, svg { display: block; max-width: 100%; }
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
 }
-/* Underline-draw "endorsement" mark used in bullet 2.
-   Same scaleX-style draw mechanic as the DEL chip strikethrough but in
-   green and beneath the text — reads as endorsement / signature rather
-   than deletion. Animates when .hero-points.chips-go is added. */
+/* Bullet 2 emphasis — quiet scale-pop on the whole phrase, plus a
+   weight shift on the word "engineers" (both occurrences). Reads as
+   confident, considered, no extra visual furniture. */
 .endorse {
-  background-image: linear-gradient(to right, #1a7a3e, #1a7a3e);
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  background-size: 0% 1px;
-  padding-bottom: 3px;
-  transition: background-size 1.6s ease-out;
+  display: inline-block;
+  transform-origin: center center;
+}
+.endorse .emph {
+  font-weight: 400;
+  color: var(--ink-soft);
+  transition: font-weight 0.3s ease-out, color 0.4s ease-out;
 }
 .hero-points.chips-go .endorse {
-  background-size: 100% 1px;
-  transition-delay: 0.4s;
+  animation: endorse-pop 0.7s cubic-bezier(.2,.8,.2,1.2) 0.45s both;
+}
+.hero-points.chips-go .endorse .emph {
+  font-weight: 600;
+  color: var(--ink);
+  transition-delay: 0.55s;
+}
+@keyframes endorse-pop {
+  0%   { transform: scale(1);    }
+  45%  { transform: scale(1.05); }
+  100% { transform: scale(1);    }
 }
 @media (prefers-reduced-motion: reduce) {
-  .endorse { transition: none; background-size: 100% 1px; }
+  .hero-points.chips-go .endorse { animation: none; }
+  .endorse .emph { transition: none; font-weight: 600; color: var(--ink); }
 }
 
 /* Horizontal gradient used to highlight AI-related phrasing in hero copy.
