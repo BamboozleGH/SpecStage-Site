@@ -104,7 +104,17 @@ img, svg { display: block; max-width: 100%; }
 
 /* ── Hero ─────────────────────────────────────────────────────────── */
 .hero { padding-top: clamp(72px, 13vw, 132px); padding-bottom: clamp(80px, 14vw, 140px); }
-.hero-inner { max-width: 1240px; }
+/* Override .wrap padding for hero so bullets get the full available width.
+   .wrap normally adds up to 112px of side-padding which was eating bullet
+   space and forcing wraps. */
+.hero-inner.wrap {
+  max-width: 1480px;
+  padding-left: clamp(20px, 2.4vw, 36px);
+  padding-right: clamp(20px, 2.4vw, 36px);
+}
+.hero-inner { max-width: 1480px; }
+.hero-points { width: 100%; }
+.hero-point { width: 100%; }
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
