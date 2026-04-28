@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="/styles.css?v=31">
+  <link rel="stylesheet" href="/styles.css?v=32">
 
   <script>window.GA_MEASUREMENT_ID = 'G-NXYJVHPJW2';</script>
 </head>
@@ -72,8 +72,10 @@
           <h2 class="section-h reveal">Four short questions.</h2>
           <p class="section-lead reveal">We use your answers to gauge fit and to make your first project go smoothly. Nothing is shared.</p>
 
-          <!-- Replace YOUR_FORM_ID below with the Formspree form ID after signup. -->
-          <form class="apply-form reveal" id="apply-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+          <!-- POSTs to /submit-application — a Cloudflare Pages Function in functions/submit-application.js
+               that validates and forwards via Resend to hello@specstage.com. Requires the
+               RESEND_API_KEY env var to be set in the Cloudflare Pages project settings. -->
+          <form class="apply-form reveal" id="apply-form" action="/submit-application" method="POST" novalidate>
 
             <!-- Honeypot field: real users won't see or fill this; bots will. Submissions with it filled are silently rejected by Formspree. -->
             <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -181,6 +183,6 @@
     </div>
   </div>
 
-  <script src="/site.js?v=31" defer></script>
+  <script src="/site.js?v=32" defer></script>
 </body>
 </html>

@@ -69,7 +69,11 @@ if (topbar) {
         let errMsg = 'Something went wrong. Please try again, or email hello@specstage.com directly.';
         try {
           const data = await res.json();
-          if (data && data.errors && data.errors[0] && data.errors[0].message) {
+          if (data && data.error) {
+            // Cloudflare Pages Function returns { ok:false, error:'...' }
+            errMsg = data.error;
+          } else if (data && data.errors && data.errors[0] && data.errors[0].message) {
+            // Formspree-style fallback for any service that returns this shape
             errMsg = data.errors[0].message;
           }
         } catch {}
