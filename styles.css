@@ -127,14 +127,35 @@ img, svg { display: block; max-width: 100%; }
   padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
   margin-bottom: 28px;
 }
-.hero-eyebrow .dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--ink);
-  animation: pulse 2.4s ease-in-out infinite;
+/* Brand mark inside the eyebrow pill — small bracket icon with three
+   dots that pulse in sequence (same ellipsis animation as the form
+   loader, scaled down). Used on every page eyebrow so the SpecStage
+   bracket appears throughout the brand language. */
+.eyebrow-mark {
+  height: 13px;
+  width: auto;
+  flex-shrink: 0;
+  fill: currentColor;
+  display: inline-block;
 }
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.4; transform: scale(0.85); }
+.eyebrow-mark .d1,
+.eyebrow-mark .d2,
+.eyebrow-mark .d3 {
+  opacity: 0.22;
+  transform-origin: center;
+  animation: eyebrow-pulse 1.6s ease-in-out infinite;
+}
+.eyebrow-mark .d2 { animation-delay: 0.16s; }
+.eyebrow-mark .d3 { animation-delay: 0.32s; }
+@keyframes eyebrow-pulse {
+  0%, 75%, 100% { opacity: 0.22; }
+  35%           { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow-mark .d1, .eyebrow-mark .d2, .eyebrow-mark .d3 {
+    animation: none;
+    opacity: 1;
+  }
 }
 .hero h1 {
   font-size: clamp(36px, 5.4vw, 66px);
