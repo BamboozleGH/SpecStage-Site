@@ -341,6 +341,33 @@ img, svg { display: block; max-width: 100%; }
   border-radius: 50%;
 }
 
+/* ── Audience bullets in hero (request-access page) ──────────────────
+   Matches the surrounding hero <p> typography (size, weight, colour)
+   so the list reads as part of the prose rather than a separate block. */
+.hero ul.audience-list {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 28px;
+  max-width: none;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.hero ul.audience-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: clamp(17px, 1.6vw, 21px);
+  font-weight: 400;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.hero ul.audience-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 14px;
+  width: 6px; height: 6px;
+  background: var(--muted);
+  border-radius: 50%;
+}
+
 /* ── Beta application list (request-access page) ──────────────────── */
 .apply-list {
   list-style: none;
