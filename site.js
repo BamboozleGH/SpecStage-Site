@@ -12,6 +12,79 @@ if (topbar) {
   onScroll();
 }
 
+// ── Beta application form (request-access page) ─────────────────
+// AJAX submit so visitors stay on the page and see inline feedback
+// rather than being redirected to Formspree's thank-you page.
+(() => {
+  const form = document.getElementById('apply-form');
+  if (!form) return;
+
+  // Record the time the page rendered — submissions made within 2s of
+  // load are almost certainly bots. Belt-and-suspenders alongside the
+  // honeypot field and Formspree's own filtering.
+  const renderedAt = Date.now();
+
+  const status = document.getElementById('apply-status');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  function showStatus(kind, msg) {
+    if (!status) return;
+    status.className = 'apply-status ' + kind;
+    status.textContent = msg;
+    status.style.display = '';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Native validation first
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // Bot speed check — discard submissions made implausibly quickly
+    if (Date.now() - renderedAt < 2000) return;
+
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.innerHTML;
+    submitBtn.textContent = 'Sending…';
+    if (status) status.style.display = 'none';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        // Replace the form with a clean confirmation block
+        form.outerHTML = `
+          <div class="apply-success" role="status" aria-live="polite">
+            <h3>Application received.</h3>
+            <p>Thanks — we'll read it personally and respond within a few business days. If you don't hear back, write to <a href="mailto:hello@specstage.com">hello@specstage.com</a>.</p>
+          </div>`;
+      } else {
+        let errMsg = 'Something went wrong. Please try again, or email hello@specstage.com directly.';
+        try {
+          const data = await res.json();
+          if (data && data.errors && data.errors[0] && data.errors[0].message) {
+            errMsg = data.errors[0].message;
+          }
+        } catch {}
+        showStatus('err', errMsg);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalLabel;
+      }
+    } catch (err) {
+      showStatus('err', 'Network error. Please try again, or email hello@specstage.com directly.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalLabel;
+    }
+  });
+})();
+
 // ── Hero chip animation: strike-through DEL, highlight ADD ──────
 // Adds .chips-go to each .hero-points after a brief pause so visitors
 // see the neutral state momentarily, then watch decisions resolve.

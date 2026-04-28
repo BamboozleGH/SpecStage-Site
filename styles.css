@@ -368,48 +368,102 @@ img, svg { display: block; max-width: 100%; }
   border-radius: 50%;
 }
 
-/* ── Beta application list (request-access page) ──────────────────── */
-.apply-list {
-  list-style: none;
-  padding: 0;
+/* ── Beta application form (request-access page) ──────────────────── */
+/* The .apply-content wrapper holds the form to a comfortable reading
+   width but is left-aligned (no auto-margin), so it shares the same
+   left edge as the hero — keeps page rhythm consistent. */
+.apply-content {
+  max-width: 820px;
+  /* explicitly NO margin auto — left-align with hero */
+}
+
+.apply-form {
   margin: 32px 0 40px;
-  counter-reset: apply;
-  display: flex; flex-direction: column; gap: 24px;
+  display: flex; flex-direction: column; gap: 22px;
 }
-.apply-list li {
-  position: relative;
-  padding: 18px 18px 18px 64px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--paper);
-  font-size: clamp(15px, 1.2vw, 17px);
-  color: var(--ink);
-  line-height: 1.5;
-  counter-increment: apply;
+.apply-form .form-field {
+  display: flex; flex-direction: column;
 }
-.apply-list li::before {
-  content: counter(apply);
-  position: absolute;
-  left: 18px; top: 16px;
-  width: 32px; height: 32px;
-  display: grid; place-items: center;
-  border: 1px solid var(--ink);
-  border-radius: 50%;
-  font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
-  font-size: 13px;
+.apply-form label {
+  font-size: 15.5px;
   font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
 }
-.apply-list li strong { display: inline-block; margin-bottom: 4px; }
-.apply-list li span { color: var(--muted); font-size: 0.92em; line-height: 1.5; }
+.apply-form .form-hint {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+.apply-form input[type="email"],
+.apply-form input[type="text"],
+.apply-form textarea {
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 11px 14px;
+  width: 100%;
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+.apply-form textarea { resize: vertical; min-height: 70px; }
+.apply-form input[type="email"]:focus,
+.apply-form input[type="text"]:focus,
+.apply-form textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.06);
+}
+.apply-form input:invalid:not(:placeholder-shown),
+.apply-form textarea:invalid:not(:placeholder-shown) {
+  border-color: #c0392b;
+}
+
+/* Honeypot — visually hidden but still focusable for the bot to see */
+.apply-form .hp {
+  position: absolute;
+  left: -9999px; top: -9999px;
+  width: 1px; height: 1px;
+  opacity: 0; pointer-events: none;
+}
 
 .apply-cta {
   display: flex; flex-direction: column; gap: 10px;
-  margin: 16px 0 0;
+  margin: 8px 0 0;
 }
+.apply-cta button {
+  align-self: flex-start;
+  cursor: pointer;
+}
+.apply-cta button[disabled] { opacity: 0.55; cursor: wait; }
 .apply-cta-note {
   font-size: 13px; color: var(--muted); line-height: 1.5;
 }
 .apply-cta-note a { text-decoration: underline; }
+
+/* Inline status messages after submit */
+.apply-status {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.apply-status.ok    { background: rgba(26, 122, 62, 0.08);  color: #1a5a2e; border: 1px solid rgba(26, 122, 62, 0.25); }
+.apply-status.err   { background: rgba(192, 57, 43, 0.06);  color: #8a2820; border: 1px solid rgba(192, 57, 43, 0.25); }
+
+.apply-success {
+  padding: 32px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.apply-success h3 { font-size: 22px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
+.apply-success p  { color: var(--ink-soft); line-height: 1.6; margin: 0; }
 
 .apply-after {
   display: grid;
