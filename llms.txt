@@ -1,0 +1,26 @@
+# SpecStage
+
+> AI-powered tailoring of UFGS (Unified Facilities Guide Specifications) master sections for federal construction projects. Exports SpecsIntact-compatible .sec files. Currently in private beta.
+
+SpecStage is a Windows desktop application built for engineers tailoring UFGS specifications for MILCON and other federal construction work. It parses UFGS master sections, applies deterministic rules (branch filtering, unit selection), uses Claude AI to resolve project-specific decisions (bracket selections, fill-in values, host nation injections), validates the output, and exports SpecsIntact-compatible files.
+
+The product is in private beta as of 2026. Beta access requests: hello@specstage.com.
+
+## Pages
+
+- [Home](https://www.specstage.com/): Product overview, capability summary, request access.
+- [How it works](https://www.specstage.com/how-it-works): Six-stage pipeline (parse → Pass A → Pass B → Pass C → validate → export) explained.
+- [About](https://www.specstage.com/about): Mission, principles, "by engineers, for engineers" framing.
+
+## Key facts
+
+- **Audience**: Federal construction engineers, A/E firms working on USACE, NAVFAC, AFCEC, and other DoD projects.
+- **Compatibility**: Exports drop into existing SpecsIntact workflows (`{SpecsIntactWD}\Jobs\<project>\pulldata\`).
+- **Approach**: Hybrid pipeline — deterministic where the answer is mechanical (branch filtering, unit selection, note removal), AI where the answer requires project judgment (brackets, fill-ins, host nation standards).
+- **Traceability**: Every AI decision carries a confidence score and written rationale. Decision log exported alongside the tailored sections.
+- **Trademark notice**: SpecsIntact is a registered trademark of NASA. SpecStage is not affiliated with NASA.
+
+## Contact
+
+- General: hello@specstage.com
+- Beta access: hello@specstage.com (mention role, organization, typical projects)
