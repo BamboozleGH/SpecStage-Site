@@ -154,15 +154,24 @@ img, svg { display: block; max-width: 100%; }
 }
 
 /* Hero "spec-tailoring" bullet points — playful brackets with ADD/DEL chips
-   that echo the in-app DEL/ADD treatment (red strikethrough, green added). */
-.hero-points {
+   that echo the in-app DEL/ADD treatment (red strikethrough, green added).
+   Selectors are scoped under .hero so they out-specify the generic
+   `.hero p { max-width: 640px; font-size: clamp(17px,1.6vw,21px) }` rule
+   defined earlier in this file — without that boost, bullets inherit the
+   640px cap and wrap regardless of container width. */
+.hero .hero-points {
   display: flex; flex-direction: column; gap: 10px;
   margin-bottom: 40px;
+  width: 100%;
+  max-width: none;
 }
-.hero-point {
+.hero p.hero-point {
   font-size: clamp(13.5px, 1.05vw, 15.5px);
   color: var(--ink-soft);
   line-height: 1.6;
+  width: 100%;
+  max-width: none;
+  margin-bottom: 0;   /* the .hero-points gap handles spacing */
 }
 .opt-add, .opt-del {
   display: inline-block;
