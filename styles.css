@@ -544,10 +544,10 @@ img, svg { display: block; max-width: 100%; }
 }
 
 /* ── Success state ───────────────────────────────────────────────── */
-/* Padded generously and given a min-height so the layout doesn't
-   collapse from the tall form to a tiny card on submit success. */
+/* min-height is also set inline by JS to match the form's measured
+   height at the moment of submit, so the layout doesn't reflow. */
 .apply-success {
-  padding: 80px 40px;
+  padding: 60px 40px;
   background: var(--paper-soft);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -572,7 +572,8 @@ img, svg { display: block; max-width: 100%; }
 @keyframes success-pop  { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @keyframes check-draw   { to   { stroke-dashoffset: 0; } }
 .apply-success h3 { font-size: 26px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.015em; }
-.apply-success p  { color: var(--ink-soft); line-height: 1.6; margin: 0 auto; max-width: 520px; }
+.apply-success p  { color: var(--ink-soft); line-height: 1.6; margin: 0 auto; max-width: 720px; }
+.apply-success p + p { margin-top: 10px; }
 
 .apply-after {
   display: grid;

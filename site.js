@@ -44,26 +44,28 @@ if (topbar) {
     submitBtn.disabled = false;
   }
 
-  // Markup for the success state — bracket icon with an animated check inside.
-  // Brackets sit slightly inset from the viewBox edges so they don't touch the card
-  // border, are thickened to 8px so they balance the check, and the check is
-  // centred in the inner space with proper proportions (short stroke ~1, long ~2).
-  const successHtml = `
-    <div class="apply-success" role="status" aria-live="polite">
-      <svg class="success-mark" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="0"   y="0"  width="8"  height="100" fill="#1a7a3e"/>
-        <rect x="0"   y="0"  width="28" height="8"   fill="#1a7a3e"/>
-        <rect x="0"   y="92" width="28" height="8"   fill="#1a7a3e"/>
-        <rect x="192" y="0"  width="8"  height="100" fill="#1a7a3e"/>
-        <rect x="172" y="0"  width="28" height="8"   fill="#1a7a3e"/>
-        <rect x="172" y="92" width="28" height="8"   fill="#1a7a3e"/>
-        <path class="check" d="M 70 52 L 90 70 L 132 30"
-              stroke="#1a7a3e" stroke-width="7" fill="none"
-              stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h3>Application sent.</h3>
-      <p>Thanks — we'll read it personally and respond within a few business days. If you don't hear back, write to <a href="mailto:hello@specstage.com">hello@specstage.com</a>.</p>
-    </div>`;
+  // Build the success card. Returns an HTML string accepting an inline
+  // min-height so the new card matches the form's height (no layout shift).
+  function buildSuccessHtml(minHeightPx) {
+    const heightStyle = minHeightPx ? ` style="min-height:${minHeightPx}px"` : '';
+    return `
+      <div class="apply-success" role="status" aria-live="polite"${heightStyle}>
+        <svg class="success-mark" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="0"   y="0"  width="8"  height="100" fill="#1a7a3e"/>
+          <rect x="0"   y="0"  width="28" height="8"   fill="#1a7a3e"/>
+          <rect x="0"   y="92" width="28" height="8"   fill="#1a7a3e"/>
+          <rect x="192" y="0"  width="8"  height="100" fill="#1a7a3e"/>
+          <rect x="172" y="0"  width="28" height="8"   fill="#1a7a3e"/>
+          <rect x="172" y="92" width="28" height="8"   fill="#1a7a3e"/>
+          <path class="check" d="M 70 52 L 90 70 L 132 30"
+                stroke="#1a7a3e" stroke-width="7" fill="none"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3>Application sent.</h3>
+        <p>Thanks — we'll read it personally and respond within a few business days.</p>
+        <p>If you don't hear back, write to <a href="mailto:hello@specstage.com">hello@specstage.com</a>.</p>
+      </div>`;
+  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -88,8 +90,11 @@ if (topbar) {
       });
 
       if (res.ok) {
-        // Replace the entire form with the success card
-        form.outerHTML = successHtml;
+        // Capture the form's current height so the success card matches it.
+        // Without this the layout collapses (form ~700-1000px tall, success
+        // card much shorter) which feels jarring on submit.
+        const formHeight = form.offsetHeight;
+        form.outerHTML = buildSuccessHtml(formHeight);
       } else {
         let errMsg = 'Something went wrong. Please try again, or email hello@specstage.com directly.';
         try {
