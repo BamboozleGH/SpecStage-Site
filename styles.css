@@ -544,28 +544,35 @@ img, svg { display: block; max-width: 100%; }
 }
 
 /* ── Success state ───────────────────────────────────────────────── */
+/* Padded generously and given a min-height so the layout doesn't
+   collapse from the tall form to a tiny card on submit success. */
 .apply-success {
-  padding: 32px;
+  padding: 80px 40px;
   background: var(--paper-soft);
   border: 1px solid var(--line);
   border-radius: 8px;
   text-align: center;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .success-mark {
-  width: 110px; height: auto;
+  width: 150px; height: auto;
   display: block;
-  margin: 0 auto 18px;
+  margin: 0 auto 24px;
   animation: success-pop 0.5s cubic-bezier(.2,.8,.2,1.2) both;
 }
 .success-mark .check {
-  stroke-dasharray: 70;
-  stroke-dashoffset: 70;
-  animation: check-draw 0.45s 0.25s ease-out forwards;
+  stroke-dasharray: 90;
+  stroke-dashoffset: 90;
+  animation: check-draw 0.5s 0.25s ease-out forwards;
 }
 @keyframes success-pop  { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @keyframes check-draw   { to   { stroke-dashoffset: 0; } }
-.apply-success h3 { font-size: 22px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
-.apply-success p  { color: var(--ink-soft); line-height: 1.6; margin: 0; max-width: 520px; margin-inline: auto; }
+.apply-success h3 { font-size: 26px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.015em; }
+.apply-success p  { color: var(--ink-soft); line-height: 1.6; margin: 0 auto; max-width: 520px; }
 
 .apply-after {
   display: grid;

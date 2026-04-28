@@ -44,17 +44,20 @@ if (topbar) {
     submitBtn.disabled = false;
   }
 
-  // Markup for the success state — bracket icon with an animated check inside
+  // Markup for the success state — bracket icon with an animated check inside.
+  // Brackets sit slightly inset from the viewBox edges so they don't touch the card
+  // border, are thickened to 8px so they balance the check, and the check is
+  // centred in the inner space with proper proportions (short stroke ~1, long ~2).
   const successHtml = `
     <div class="apply-success" role="status" aria-live="polite">
-      <svg class="success-mark" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="0"   y="0"  width="6"  height="80" fill="#1a7a3e"/>
-        <rect x="0"   y="0"  width="22" height="6"  fill="#1a7a3e"/>
-        <rect x="0"   y="74" width="22" height="6"  fill="#1a7a3e"/>
-        <rect x="194" y="0"  width="6"  height="80" fill="#1a7a3e"/>
-        <rect x="178" y="0"  width="22" height="6"  fill="#1a7a3e"/>
-        <rect x="178" y="74" width="22" height="6"  fill="#1a7a3e"/>
-        <path class="check" d="M 70 42 L 92 60 L 132 22"
+      <svg class="success-mark" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="0"   y="0"  width="8"  height="100" fill="#1a7a3e"/>
+        <rect x="0"   y="0"  width="28" height="8"   fill="#1a7a3e"/>
+        <rect x="0"   y="92" width="28" height="8"   fill="#1a7a3e"/>
+        <rect x="192" y="0"  width="8"  height="100" fill="#1a7a3e"/>
+        <rect x="172" y="0"  width="28" height="8"   fill="#1a7a3e"/>
+        <rect x="172" y="92" width="28" height="8"   fill="#1a7a3e"/>
+        <path class="check" d="M 70 52 L 90 70 L 132 30"
               stroke="#1a7a3e" stroke-width="7" fill="none"
               stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
