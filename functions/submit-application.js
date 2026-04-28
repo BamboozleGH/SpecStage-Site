@@ -55,24 +55,42 @@ export async function onRequestPost(context) {
     return jsonResponse({ ok: true }, 200);
   }
 
-  const email = (formData.get('email') || '').toString().trim();
-  const q1    = (formData.get('UFGS project types') || '').toString().trim();
-  const q2    = (formData.get('Tailoring frequency') || '').toString().trim();
-  const q3    = (formData.get('SpecsIntact use') || '').toString().trim();
-  const q4    = (formData.get('Test section') || '').toString().trim();
+  const name              = (formData.get('name') || '').toString().trim();
+  const email             = (formData.get('email') || '').toString().trim();
+  const organization      = (formData.get('organization') || '').toString().trim();
+  const organizationType  = (formData.get('organization-type') || '').toString().trim();
+  const ufgsWork          = (formData.get('ufgs-work') || '').toString().trim();
+  const specsIntactUse    = (formData.get('specsintact-use') || '').toString().trim();
+  const specsIntactNotes  = (formData.get('specsintact-details') || '').toString().trim(); // optional
+  const heardFrom         = (formData.get('heard-from') || '').toString().trim();
 
-  if (!email || !q1 || !q2 || !q3 || !q4) {
-    return jsonResponse({ ok: false, error: 'All fields are required.' }, 400);
+  // All required fields must be present (specsIntactNotes is optional)
+  if (!name || !email || !organization || !organizationType || !ufgsWork || !specsIntactUse || !heardFrom) {
+    return jsonResponse({ ok: false, error: 'All required fields must be filled.' }, 400);
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return jsonResponse({ ok: false, error: 'Please provide a valid email address.' }, 400);
   }
 
-  for (const v of [q1, q2, q3, q4]) {
-    if (v.length > FIELD_LIMIT) {
+  // Validate organization type against the allow-list
+  const allowedOrgTypes = ['A/E firm', 'Construction company', 'Consulting firm', 'Government / military agency', 'Other'];
+  if (!allowedOrgTypes.includes(organizationType)) {
+    return jsonResponse({ ok: false, error: 'Invalid organization type.' }, 400);
+  }
+  if (!['Yes', 'No', 'Other'].includes(specsIntactUse)) {
+    return jsonResponse({ ok: false, error: 'Invalid SpecsIntact use selection.' }, 400);
+  }
+
+  // Cap field lengths to prevent abuse
+  const lengthChecks = [
+    [name, 200], [email, 200], [organization, 200], [heardFrom, 500],
+    [ufgsWork, FIELD_LIMIT], [specsIntactNotes, FIELD_LIMIT],
+  ];
+  for (const [v, limit] of lengthChecks) {
+    if (v.length > limit) {
       return jsonResponse(
-        { ok: false, error: `One or more fields exceed the ${FIELD_LIMIT} character limit.` },
+        { ok: false, error: `One or more fields exceed the allowed length.` },
         400
       );
     }
@@ -85,37 +103,49 @@ export async function onRequestPost(context) {
     );
   }
 
-  // Plain-text body for the email — easy to read in any client
-  const text = [
-    'New beta application received.',
+  // Plain-text body — easy to read in any email client
+  const textLines = [
+    `New beta application from ${name}.`,
     '',
-    `From: ${email}`,
+    `Name:              ${name}`,
+    `Email:             ${email}`,
+    `Organization:      ${organization}`,
+    `Organization type: ${organizationType}`,
     '',
-    '1. What type of UFGS projects do you work on?',
-    q1,
+    'UFGS work:',
+    ufgsWork,
     '',
-    '2. How often do you tailor specifications?',
-    q2,
+    `Currently uses SpecsIntact: ${specsIntactUse}`,
+  ];
+  if (specsIntactNotes) {
+    textLines.push('', 'Notes on workflow:', specsIntactNotes);
+  }
+  textLines.push(
     '',
-    '3. Do you currently use SpecsIntact?',
-    q3,
-    '',
-    '4. One section to test with SpecStage:',
-    q4,
+    `Heard about us via: ${heardFrom}`,
     '',
     '---',
     'Sent from the request-access form on www.specstage.com.',
     'Reply directly to this email to respond to the applicant.',
-  ].join('\n');
+  );
+  const text = textLines.join('\n');
 
-  // Minimal HTML version for clients that prefer HTML
+  // HTML version for clients that prefer it
+  const htmlNotesBlock = specsIntactNotes
+    ? `<p><strong>Notes on workflow:</strong><br>${escapeHtml(specsIntactNotes).replace(/\n/g, '<br>')}</p>`
+    : '';
   const html = `
-    <p><strong>New beta application received.</strong></p>
-    <p><strong>From:</strong> ${escapeHtml(email)}</p>
-    <p><strong>1. UFGS project types:</strong><br>${escapeHtml(q1).replace(/\n/g, '<br>')}</p>
-    <p><strong>2. Tailoring frequency:</strong><br>${escapeHtml(q2).replace(/\n/g, '<br>')}</p>
-    <p><strong>3. SpecsIntact use:</strong><br>${escapeHtml(q3).replace(/\n/g, '<br>')}</p>
-    <p><strong>4. Section to test:</strong><br>${escapeHtml(q4).replace(/\n/g, '<br>')}</p>
+    <p><strong>New beta application from ${escapeHtml(name)}.</strong></p>
+    <table style="border-collapse:collapse;font-size:14px">
+      <tr><td style="padding:4px 12px 4px 0;color:#666">Name:</td><td>${escapeHtml(name)}</td></tr>
+      <tr><td style="padding:4px 12px 4px 0;color:#666">Email:</td><td><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
+      <tr><td style="padding:4px 12px 4px 0;color:#666">Organization:</td><td>${escapeHtml(organization)}</td></tr>
+      <tr><td style="padding:4px 12px 4px 0;color:#666">Type:</td><td>${escapeHtml(organizationType)}</td></tr>
+    </table>
+    <p><strong>UFGS work:</strong><br>${escapeHtml(ufgsWork).replace(/\n/g, '<br>')}</p>
+    <p><strong>Currently uses SpecsIntact:</strong> ${escapeHtml(specsIntactUse)}</p>
+    ${htmlNotesBlock}
+    <p><strong>Heard about us via:</strong> ${escapeHtml(heardFrom)}</p>
     <hr>
     <p style="color:#888;font-size:12px">Sent from the request-access form on www.specstage.com. Reply directly to respond to the applicant.</p>
   `;
@@ -131,7 +161,7 @@ export async function onRequestPost(context) {
         from: 'SpecStage Site <noreply@specstage.com>',
         to: ['hello@specstage.com'],
         reply_to: email,
-        subject: `SpecStage beta application — ${email}`,
+        subject: `SpecStage beta application — ${name} (${organizationType})`,
         text,
         html,
       }),

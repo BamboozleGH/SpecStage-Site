@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="/styles.css?v=32">
+  <link rel="stylesheet" href="/styles.css?v=33">
 
   <script>window.GA_MEASUREMENT_ID = 'G-NXYJVHPJW2';</script>
 </head>
@@ -77,44 +77,63 @@
                RESEND_API_KEY env var to be set in the Cloudflare Pages project settings. -->
           <form class="apply-form reveal" id="apply-form" action="/submit-application" method="POST" novalidate>
 
-            <!-- Honeypot field: real users won't see or fill this; bots will. Submissions with it filled are silently rejected by Formspree. -->
+            <!-- Honeypot field: real users won't see or fill this; bots will. -->
             <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
 
             <div class="form-field">
-              <label for="apply-email">Your email <span style="color:#c0392b">*</span></label>
+              <label for="apply-name">Name <span class="req">*</span></label>
+              <input type="text" id="apply-name" name="name" required autocomplete="name" placeholder="Your full name">
+            </div>
+
+            <div class="form-field">
+              <label for="apply-email">Email <span class="req">*</span></label>
               <span class="form-hint">So we can respond.</span>
               <input type="email" id="apply-email" name="email" required autocomplete="email" placeholder="you@yourorg.com">
             </div>
 
             <div class="form-field">
-              <label for="apply-q1">What type of UFGS projects do you work on? <span style="color:#c0392b">*</span></label>
-              <span class="form-hint">Branch (USACE / NAVFAC / AFCEC / other), facility types, typical scope.</span>
-              <textarea id="apply-q1" name="UFGS project types" required rows="3" placeholder="e.g. NAVFAC PAC, BEQ renovations, average $40M scope…"></textarea>
+              <label for="apply-org">Organization <span class="req">*</span></label>
+              <input type="text" id="apply-org" name="organization" required autocomplete="organization" placeholder="The company or agency you work with">
             </div>
 
             <div class="form-field">
-              <label for="apply-q2">How often do you tailor specifications? <span style="color:#c0392b">*</span></label>
-              <span class="form-hint">Per week, per month, per year — whatever frames it best.</span>
-              <textarea id="apply-q2" name="Tailoring frequency" required rows="2" placeholder="e.g. 2–3 projects per quarter…"></textarea>
+              <label for="apply-orgtype">Organization type <span class="req">*</span></label>
+              <select id="apply-orgtype" name="organization-type" required>
+                <option value="" disabled selected>Choose one…</option>
+                <option value="A/E firm">A/E firm</option>
+                <option value="Construction company">Construction company</option>
+                <option value="Consulting firm">Consulting firm</option>
+                <option value="Government / military agency">Government / military agency</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
 
             <div class="form-field">
-              <label for="apply-q3">Do you currently use SpecsIntact? <span style="color:#c0392b">*</span></label>
-              <span class="form-hint">If yes, briefly — version, working directory pattern, anything notable about your workflow.</span>
-              <textarea id="apply-q3" name="SpecsIntact use" required rows="3" placeholder="e.g. SpecsIntact 5, working dir on OneDrive, Jobs/{project}/pulldata layout…"></textarea>
+              <label for="apply-work">Tell us about your UFGS work <span class="req">*</span></label>
+              <span class="form-hint">Branch (USACE / NAVFAC / AFCEC / other), facility types, typical project scope, and roughly how often you tailor specifications.</span>
+              <textarea id="apply-work" name="ufgs-work" required rows="4" placeholder="e.g. NAVFAC PAC, BEQ renovations, $30–60M scope, ~6 projects per year…"></textarea>
             </div>
 
             <div class="form-field">
-              <label for="apply-q4">One section you'd like to test with SpecStage <span style="color:#c0392b">*</span></label>
-              <span class="form-hint">Pick something representative of your typical work — we'll prioritise it for your first run.</span>
-              <textarea id="apply-q4" name="Test section" required rows="2" placeholder="e.g. 23 09 23 — Direct Digital Control HVAC…"></textarea>
+              <span class="form-label-as-legend">Do you currently use SpecsIntact? <span class="req">*</span></span>
+              <div class="radio-group">
+                <label><input type="radio" name="specsintact-use" value="Yes" required> Yes</label>
+                <label><input type="radio" name="specsintact-use" value="No"> No</label>
+                <label><input type="radio" name="specsintact-use" value="Other"> Other</label>
+              </div>
+              <textarea id="apply-specsintact-details" name="specsintact-details" rows="2" placeholder="Optional — version, working-directory layout, what you use instead, anything notable about your workflow." style="margin-top:10px"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label for="apply-heard">How did you hear about us? <span class="req">*</span></label>
+              <input type="text" id="apply-heard" name="heard-from" required placeholder="e.g. LinkedIn, a colleague, web search…">
             </div>
 
             <div class="apply-cta">
               <button type="submit" class="btn">
                 Submit application <span class="arrow" aria-hidden="true">→</span>
               </button>
-              <span class="apply-cta-note">All fields required. Or write to <a href="mailto:hello@specstage.com">hello@specstage.com</a> directly.</span>
+              <span class="apply-cta-note">Required fields marked <span class="req">*</span>. Or write to <a href="mailto:hello@specstage.com">hello@specstage.com</a> directly.</span>
             </div>
 
             <div class="apply-status" id="apply-status" style="display:none" role="status" aria-live="polite"></div>
@@ -183,6 +202,6 @@
     </div>
   </div>
 
-  <script src="/site.js?v=32" defer></script>
+  <script src="/site.js?v=33" defer></script>
 </body>
 </html>

@@ -398,7 +398,8 @@ img, svg { display: block; max-width: 100%; }
 }
 .apply-form input[type="email"],
 .apply-form input[type="text"],
-.apply-form textarea {
+.apply-form textarea,
+.apply-form select {
   font-family: inherit;
   font-size: 15px;
   line-height: 1.5;
@@ -411,9 +412,20 @@ img, svg { display: block; max-width: 100%; }
   transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
 }
 .apply-form textarea { resize: vertical; min-height: 70px; }
+.apply-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%230a0a0a' stroke-width='1.6' stroke-linecap='round'><path d='M1 1.5l5 5 5-5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+}
 .apply-form input[type="email"]:focus,
 .apply-form input[type="text"]:focus,
-.apply-form textarea:focus {
+.apply-form textarea:focus,
+.apply-form select:focus {
   outline: none;
   border-color: var(--ink);
   box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.06);
@@ -421,6 +433,42 @@ img, svg { display: block; max-width: 100%; }
 .apply-form input:invalid:not(:placeholder-shown),
 .apply-form textarea:invalid:not(:placeholder-shown) {
   border-color: #c0392b;
+}
+
+/* Required asterisk — subtle red */
+.apply-form .req { color: #c0392b; font-weight: 700; }
+
+/* Radio group — inline pills */
+.apply-form .form-label-as-legend {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.apply-form .radio-group {
+  display: flex; flex-wrap: wrap; gap: 16px;
+}
+.apply-form .radio-group label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 500; color: var(--ink);
+  cursor: pointer;
+  margin-bottom: 0;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.apply-form .radio-group label:hover { border-color: #bbb; background: var(--paper-soft); }
+.apply-form .radio-group input[type="radio"] {
+  accent-color: var(--ink);
+  margin: 0;
+  cursor: pointer;
+}
+.apply-form .radio-group label:has(input:checked) {
+  border-color: var(--ink);
+  background: rgba(10, 10, 10, 0.04);
 }
 
 /* Honeypot — visually hidden but still focusable for the bot to see */
