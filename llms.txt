@@ -11,6 +11,7 @@ The product is in private beta as of 2026. Beta access requests: hello@specstage
 - [Home](https://www.specstage.com/): Product overview, capability summary, request access.
 - [How it works](https://www.specstage.com/how-it-works): The end-to-end engineer workflow from document upload through review and export.
 - [About](https://www.specstage.com/about): Mission, principles, "by engineers, for engineers" framing.
+- [Request access](https://www.specstage.com/request-access): Apply for the private beta. Four short questions about UFGS work, tailoring frequency, SpecsIntact use, and a section to test.
 
 ## Key facts
 

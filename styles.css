@@ -341,6 +341,68 @@ img, svg { display: block; max-width: 100%; }
   border-radius: 50%;
 }
 
+/* ── Beta application list (request-access page) ──────────────────── */
+.apply-list {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 40px;
+  counter-reset: apply;
+  display: flex; flex-direction: column; gap: 24px;
+}
+.apply-list li {
+  position: relative;
+  padding: 18px 18px 18px 64px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  font-size: clamp(15px, 1.2vw, 17px);
+  color: var(--ink);
+  line-height: 1.5;
+  counter-increment: apply;
+}
+.apply-list li::before {
+  content: counter(apply);
+  position: absolute;
+  left: 18px; top: 16px;
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 600;
+}
+.apply-list li strong { display: inline-block; margin-bottom: 4px; }
+.apply-list li span { color: var(--muted); font-size: 0.92em; line-height: 1.5; }
+
+.apply-cta {
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 16px 0 0;
+}
+.apply-cta-note {
+  font-size: 13px; color: var(--muted); line-height: 1.5;
+}
+.apply-cta-note a { text-decoration: underline; }
+
+.apply-after {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  margin-top: 24px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+.apply-after h3 {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.apply-after p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
+.apply-after a { text-decoration: underline; }
+
 /* ── Capability cards ─────────────────────────────────────────────── */
 .cards {
   display: grid; gap: 1px;
