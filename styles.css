@@ -159,7 +159,7 @@ img, svg { display: block; max-width: 100%; }
   max-width: none;
 }
 .hero p.hero-point {
-  font-size: clamp(15px, 1.25vw, 17.5px);
+  font-size: clamp(16px, 1.4vw, 19px);
   color: var(--ink-soft);
   line-height: 1.6;
   width: 100%;
@@ -173,7 +173,7 @@ img, svg { display: block; max-width: 100%; }
 .opt-add, .opt-del {
   display: inline-block;
   font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
-  font-size: 0.86em;
+  font-size: 0.82em;   /* chip slightly smaller relative to body so bullets still fit */
   padding: 0 5px;
   border-radius: 3px;
   margin: 0 1px;
