@@ -314,6 +314,33 @@ img, svg { display: block; max-width: 100%; }
   letter-spacing: -0.01em;
 }
 
+/* ── Credibility list — small dark dots, near-black text ──────────── */
+.credibility-list {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.credibility-list li {
+  position: relative;
+  padding-left: 26px;
+  font-size: clamp(15px, 1.2vw, 17.5px);
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.credibility-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 11px;
+  width: 7px; height: 7px;
+  background: var(--ink);
+  border-radius: 50%;
+}
+
 /* ── Capability cards ─────────────────────────────────────────────── */
 .cards {
   display: grid; gap: 1px;
