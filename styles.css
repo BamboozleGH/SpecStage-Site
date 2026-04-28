@@ -519,6 +519,10 @@ img, svg { display: block; max-width: 100%; }
   z-index: 10;
   animation: loading-fade-in 0.18s ease-out;
 }
+/* Restore the [hidden] behaviour — the .apply-loading display:flex above
+   has the same specificity as the user-agent [hidden]{display:none} and
+   wins by source order, which would leave the overlay visible on load. */
+.apply-loading[hidden] { display: none; }
 @keyframes loading-fade-in { from { opacity: 0; } to { opacity: 1; } }
 .apply-loading p {
   font-size: 15.5px;
