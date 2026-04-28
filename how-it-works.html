@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a0a0a">
 
-  <title>How SpecStage works — UFGS tailoring pipeline</title>
-  <meta name="description" content="SpecStage parses UFGS .sec files, applies deterministic rules, resolves bracket and fill-in decisions with AI, injects host-nation standards, validates the output, and exports SpecsIntact-compatible files. See the pipeline.">
+  <title>How SpecStage works — UFGS tailoring workflow</title>
+  <meta name="description" content="From project documents to project-ready specifications. SpecStage recommends UFGS sections, tailors them to your project context, presents them for engineer review, and exports as SpecsIntact-compatible files or PDF.">
   <link rel="canonical" href="https://www.specstage.com/how-it-works">
 
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="SpecStage">
-  <meta property="og:title" content="How SpecStage works — UFGS tailoring pipeline">
-  <meta property="og:description" content="A deterministic + AI pipeline for tailoring UFGS specifications to a specific federal construction project.">
+  <meta property="og:title" content="How SpecStage works — UFGS tailoring workflow">
+  <meta property="og:description" content="From project documents to project-ready UFGS specifications. AI-assisted, engineer-controlled, with SpecsIntact and PDF export.">
   <meta property="og:url" content="https://www.specstage.com/how-it-works">
   <meta property="og:image" content="https://www.specstage.com/og-image.png">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="How SpecStage works — UFGS tailoring pipeline">
-  <meta name="twitter:description" content="A deterministic + AI pipeline for tailoring UFGS to a project.">
+  <meta name="twitter:title" content="How SpecStage works — UFGS tailoring workflow">
+  <meta name="twitter:description" content="From project documents to project-ready UFGS specifications.">
   <meta name="twitter:image" content="https://www.specstage.com/og-image.png">
 
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -53,8 +53,8 @@
     <section class="hero">
       <div class="wrap hero-inner">
         <span class="hero-eyebrow">How it works</span>
-        <h1 style="font-size:clamp(36px,5.5vw,64px)">A deterministic <span class="br">+ AI</span> pipeline for UFGS tailoring.</h1>
-        <p>SpecStage runs each UFGS section through a six-stage pipeline. Deterministic rules handle the mechanical decisions; AI handles the project-specific judgment calls. Every decision is traceable.</p>
+        <h1 style="font-size:clamp(36px,5.5vw,64px)">From project documents to <span class="br">project-ready</span> specifications.</h1>
+        <p>SpecStage streamlines the UFGS tailoring workflow into a series of clear, engineer-controlled stages. Project documents go in; tailored, reviewable specifications come out.</p>
       </div>
     </section>
 
@@ -64,38 +64,32 @@
 
           <div class="stage">
             <span class="stage-num">1</span>
-            <h3>Parse</h3>
-            <p>Each <code>.sec</code> file is parsed into a tree of structural nodes (sections, parts, paragraphs, brackets, fill-ins, references, submittals). The parser preserves the SpecsIntact XML faithfully so the output round-trips.</p>
+            <h3>Upload project documents</h3>
+            <p>Drop your RFP, design criteria, drawings, and supporting documentation into a single project workspace. SpecStage accepts PDF, image, and text formats and uses these inputs as the foundation for every downstream decision.</p>
           </div>
 
           <div class="stage">
             <span class="stage-num">2</span>
-            <h3>Pass A — Paragraph and option pruning</h3>
-            <p>Deterministic rules prune branch-specific options (USACE / NAVFAC / AFCEC), unit-system options (English / metric), and removed sections. Specifier notes are stripped. Tables are pruned row-by-row against project applicability.</p>
+            <h3>AI-assisted section recommendation</h3>
+            <p>SpecStage reviews the uploaded documents and recommends the UFGS specification sections relevant to your project scope. Engineers confirm, add, or remove sections before tailoring begins.</p>
           </div>
 
           <div class="stage">
             <span class="stage-num">3</span>
-            <h3>Pass B — Brackets and fill-ins</h3>
-            <p>Every bracketed choice <code>[Option A][Option B]</code> and every blank <code>[_____]</code> is resolved by Claude against your project context — branch, location, mission criticality, scope documents, and the surrounding spec text. Each decision returns a confidence score and a written rationale.</p>
+            <h3>Project-aware tailoring</h3>
+            <p>Each selected section is tailored against the project's full context — branch, location, scope, mission criticality, host-nation considerations, and any additional options the engineer has configured.</p>
           </div>
 
           <div class="stage">
             <span class="stage-num">4</span>
-            <h3>Pass C — Host nation injection</h3>
-            <p>For OCONUS projects where host nation standards are accepted, equivalent local standards (JIS, IEC, DIN, BS EN, KS, …) are injected alongside US standards in both the REFERENCES article and inline citations.</p>
+            <h3>Engineer review</h3>
+            <p>Tailored sections are presented for review with the rationale behind each decision. Engineers may accept, edit, or request revisions before approving any output for delivery.</p>
           </div>
 
           <div class="stage">
             <span class="stage-num">5</span>
-            <h3>Validate</h3>
-            <p>Output is validated against the UFGS schema. Unresolved blanks, broken references, and orphaned submittal items are flagged for PE review. Nothing leaves the pipeline that wouldn't pass a spec review.</p>
-          </div>
-
-          <div class="stage">
-            <span class="stage-num">6</span>
             <h3>Export</h3>
-            <p>Tailored sections export as SpecsIntact-compatible <code>.sec</code> files, ready to drop into your existing <code>{SpecsIntactWD}\Jobs\&lt;project&gt;\pulldata\</code> folder. Decisions are logged alongside the output for full audit traceability.</p>
+            <p>Approved sections export as SpecsIntact-compatible specification files for direct integration into your existing workflow, or as PDF for distribution and archival.</p>
           </div>
 
         </div>
@@ -104,9 +98,9 @@
 
     <section class="section">
       <div class="wrap">
-        <p class="section-eyebrow reveal">Why a hybrid pipeline</p>
-        <h2 class="section-h reveal">Determinism where it works. AI where it matters.</h2>
-        <p class="section-lead reveal">Branch filtering and unit selection have correct, mechanical answers — those run as code. Bracket selections and fill-ins require reading the project context — those run through Claude. The split keeps results reproducible where they should be reproducible, and judgment-aware where they need to be judgment-aware.</p>
+        <p class="section-eyebrow reveal">Engineer-controlled by design</p>
+        <h2 class="section-h reveal">SpecStage proposes. The engineer decides.</h2>
+        <p class="section-lead reveal">Every recommendation, every tailoring decision, and every export is presented for engineer review. SpecStage is built to accelerate the engineer's work — never to replace their judgment or remove their authority over the final specification.</p>
       </div>
     </section>
 
