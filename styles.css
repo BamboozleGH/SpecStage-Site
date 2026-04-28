@@ -146,6 +146,26 @@ img, svg { display: block; max-width: 100%; }
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
 }
+/* Underline-draw "endorsement" mark used in bullet 2.
+   Same scaleX-style draw mechanic as the DEL chip strikethrough but in
+   green and beneath the text — reads as endorsement / signature rather
+   than deletion. Animates when .hero-points.chips-go is added. */
+.endorse {
+  background-image: linear-gradient(to right, #1a7a3e, #1a7a3e);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  padding-bottom: 3px;
+  transition: background-size 0.6s ease-out;
+}
+.hero-points.chips-go .endorse {
+  background-size: 100% 2px;
+  transition-delay: 0.4s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .endorse { transition: none; background-size: 100% 2px; }
+}
+
 /* Horizontal gradient used to highlight AI-related phrasing in hero copy.
    -webkit-text-fill-color is required alongside background-clip:text so the
    gradient actually shows through (color:transparent alone is unreliable). */
