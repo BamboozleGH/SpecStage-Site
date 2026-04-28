@@ -258,9 +258,9 @@ img, svg { display: block; max-width: 100%; }
 }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .hero-meta {
-  margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line);
-  display: flex; flex-wrap: wrap; gap: 28px 40px;
-  font-size: 13px; color: var(--muted);
+  margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 18px 56px;
+  font-size: 15px; color: var(--muted); line-height: 1.5;
 }
 .hero-meta strong { color: var(--ink); font-weight: 600; }
 
