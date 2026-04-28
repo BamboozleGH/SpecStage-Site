@@ -9,7 +9,7 @@
   --paper:      #ffffff;
   --paper-soft: #fafafa;
   --accent:     #0a0a0a;
-  --max:        1120px;
+  --max:        1320px;
   --pad-x:      clamp(20px, 5vw, 56px);
   --space-xl:   clamp(80px, 12vw, 160px);
   --space-lg:   clamp(48px, 8vw, 96px);
@@ -104,17 +104,10 @@ img, svg { display: block; max-width: 100%; }
 
 /* ── Hero ─────────────────────────────────────────────────────────── */
 .hero { padding-top: clamp(72px, 13vw, 132px); padding-bottom: clamp(80px, 14vw, 140px); }
-/* Override .wrap padding for hero so bullets get the full available width.
-   .wrap normally adds up to 112px of side-padding which was eating bullet
-   space and forcing wraps. */
-.hero-inner.wrap {
-  max-width: 1480px;
-  padding-left: clamp(20px, 2.4vw, 36px);
-  padding-right: clamp(20px, 2.4vw, 36px);
-}
-.hero-inner { max-width: 1480px; }
-.hero-points { width: 100%; }
-.hero-point { width: 100%; }
+/* Hero shares the standard .wrap container (max-width: var(--max), now 1320px)
+   so it aligns with the rest of the page. The bullets fit because we override
+   the .hero p specificity trap below — not because we widen the hero alone. */
+.hero-inner { /* defers to .wrap */ }
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
@@ -166,7 +159,7 @@ img, svg { display: block; max-width: 100%; }
   max-width: none;
 }
 .hero p.hero-point {
-  font-size: clamp(13.5px, 1.05vw, 15.5px);
+  font-size: clamp(15px, 1.25vw, 17.5px);
   color: var(--ink-soft);
   line-height: 1.6;
   width: 100%;
