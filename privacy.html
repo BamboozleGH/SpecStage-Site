@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="/styles.css?v=21">
+  <link rel="stylesheet" href="/styles.css?v=22">
 
   <script>window.GA_MEASUREMENT_ID = 'G-NXYJVHPJW2';</script>
 </head>
@@ -59,8 +59,12 @@
         <ul>
           <li>We do not track you across other sites.</li>
           <li>We do not sell or share data with advertisers.</li>
-          <li>We do not store the contents of any UFGS specification, project document, or RFP that you upload to the SpecStage application — those stay on your machine.</li>
         </ul>
+
+        <h2>How the SpecStage application handles your project files</h2>
+        <p>SpecStage does not operate a backend server. Project documents you load into the application — RFPs, design criteria, drawings, UFGS master sections — are stored locally on your machine and are not uploaded to or retained by SpecStage.</p>
+        <p>To generate tailoring recommendations, the application sends the minimum content needed for each decision (relevant text excerpts, project context, and the specification section under review) to its AI model provider, Anthropic. Anthropic's API terms specify that inputs sent through the API are not used to train their models.</p>
+        <p>All AI outputs are returned to your local machine for engineer review and approval before any export. Decision logs and tailored output files are written locally; we do not receive copies.</p>
 
         <h2>Cookies</h2>
         <p>Only one cookie category is used: Google Analytics, gated behind a consent banner. If you decline, no analytics cookies are set. A small <code>localStorage</code> entry remembers your choice so we don't ask again on every visit.</p>
@@ -118,6 +122,6 @@
   </div>
 
   <script>document.getElementById('updated').textContent = new Date().toISOString().slice(0,10);</script>
-  <script src="/site.js?v=21" defer></script>
+  <script src="/site.js?v=22" defer></script>
 </body>
 </html>
