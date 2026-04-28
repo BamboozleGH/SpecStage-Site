@@ -183,16 +183,20 @@ img, svg { display: block; max-width: 100%; }
 
   /* Neutral pre-animation state */
   color: var(--muted);
-  background: rgba(0, 0, 0, 0.045);
-  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.045);
+  font-weight: 600;
   text-decoration: none;
   opacity: 1;
+  transform: scale(1);
 
+  /* Slower, smoother fade so the green/red hue change is clearly visible.
+     Uses background-color (not the background shorthand) so the transition
+     reliably interpolates the colour. */
   transition:
-    color           0.45s ease-out,
-    background-color 0.45s ease-out,
-    font-weight     0.3s  ease-out,
-    opacity         0.45s ease-out;
+    color            0.75s ease-out,
+    background-color 0.75s ease-out,
+    opacity          0.75s ease-out,
+    transform        0.55s cubic-bezier(.2,.8,.2,1.2);
 }
 
 /* DEL strikethrough — drawn by a pseudo-element so it can animate */
@@ -205,14 +209,14 @@ img, svg { display: block; max-width: 100%; }
   background: currentColor;
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 0.35s ease-out;
+  transition: transform 0.4s ease-out;
   pointer-events: none;
 }
 
 /* Animated end-state, gated by .hero-points.chips-go */
 .hero-points.chips-go .opt-del {
   color: #c0392b;
-  background: rgba(192, 57, 43, 0.06);
+  background-color: rgba(192, 57, 43, 0.07);
   opacity: 0.7;
   transition-delay: var(--delay, 0s);
 }
@@ -222,24 +226,29 @@ img, svg { display: block; max-width: 100%; }
 }
 .hero-points.chips-go .opt-add {
   color: #1a7a3e;
-  background: rgba(26, 122, 62, 0.10);
-  font-weight: 600;
+  background-color: rgba(26, 122, 62, 0.12);
+  /* Tiny scale-pop accentuates the "this is the chosen option" moment */
+  animation: chip-pop 0.65s ease-out var(--delay, 0s) both;
   transition-delay: var(--delay, 0s);
+}
+@keyframes chip-pop {
+  0%   { transform: scale(1);    }
+  55%  { transform: scale(1.08); }
+  100% { transform: scale(1);    }
 }
 
 /* Respect prefers-reduced-motion — skip animation, apply final state immediately */
 @media (prefers-reduced-motion: reduce) {
-  .opt-add, .opt-del { transition: none; }
+  .opt-add, .opt-del { transition: none; animation: none; }
   .opt-del::after { transition: none; transform: scaleX(1); }
   .opt-del {
     color: #c0392b;
-    background: rgba(192, 57, 43, 0.06);
+    background-color: rgba(192, 57, 43, 0.07);
     opacity: 0.7;
   }
   .opt-add {
     color: #1a7a3e;
-    background: rgba(26, 122, 62, 0.10);
-    font-weight: 600;
+    background-color: rgba(26, 122, 62, 0.12);
   }
 }
 .hero p {
