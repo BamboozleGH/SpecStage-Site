@@ -115,16 +115,12 @@ if (topbar) {
   });
 })();
 
-// ── Hero chip animation: strike-through DEL, highlight ADD ──────
-// Adds .chips-go to each .hero-points after a brief pause so visitors
-// see the neutral state momentarily, then watch decisions resolve.
-(() => {
-  const groups = document.querySelectorAll('.hero-points');
-  if (!groups.length) return;
-  const start = () => groups.forEach(el => el.classList.add('chips-go'));
-  // Wait until layout has settled and the user has had a tick to land.
-  setTimeout(start, 450);
-})();
+// ── Hero chip animation ─────────────────────────────────────────
+// Now driven entirely by CSS @keyframes with animation-delay (see
+// .opt-add / .opt-del / .endorse in styles.css). No JS needed — this
+// makes the animation robust to JS being disabled or blocked, and
+// the chips' default styles already represent the final coloured
+// state so the meaning is preserved even if animations don't run.
 
 // ── Reveal-on-scroll (Intersection Observer) ────────────────────
 const revealEls = document.querySelectorAll('.reveal');

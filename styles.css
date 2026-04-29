@@ -190,28 +190,28 @@ img, svg { display: block; max-width: 100%; }
 /* Bullet 2 emphasis — quiet scale-pop on the whole phrase plus a
    weight + colour shift on every word inside it ('by engineers, for
    engineers'). Reads as confident, considered, no extra furniture. */
+/* Default state IS the final state — so if CSS animations don't run
+   (very old browser, animation suppressed, etc.) the meaning still
+   reads correctly. Animation plays from neutral -> final via
+   fill-mode: backwards, which means before the animation starts the
+   element shows the 0% keyframe (neutral), then animates to 100%
+   (which matches the default styles). */
 .endorse {
   display: inline-block;
   transform-origin: center center;
-  font-weight: 400;
-  color: var(--ink-soft);
-  transition: font-weight 0.3s ease-out, color 0.4s ease-out;
-}
-.hero-points.chips-go .endorse {
   font-weight: 600;
   color: var(--ink);
-  animation: endorse-pop 0.7s cubic-bezier(.2,.8,.2,1.2) 0.45s both;
-  transition-delay: 0.55s;
+  animation: endorse-pop 0.7s cubic-bezier(.2,.8,.2,1.2) 0.95s backwards;
 }
 @keyframes endorse-pop {
-  0%   { transform: scale(1);    }
-  45%  { transform: scale(1.05); }
-  100% { transform: scale(1);    }
+  0%   { transform: scale(1);    font-weight: 400; color: var(--ink-soft); }
+  44%  { transform: scale(1);    font-weight: 400; color: var(--ink-soft); }
+  60%  { transform: scale(1.05); font-weight: 600; color: var(--ink); }
+  100% { transform: scale(1);    font-weight: 600; color: var(--ink); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-points.chips-go .endorse {
+  .endorse {
     animation: none;
-    transition: none;
     font-weight: 600;
     color: var(--ink);
   }
@@ -249,10 +249,16 @@ img, svg { display: block; max-width: 100%; }
   max-width: none;
   margin-bottom: 0;   /* the .hero-points gap handles spacing */
 }
-/* Chips start in a neutral grey state. When .chips-go is added to the parent
-   .hero-points (after page load), each chip transitions to its final coloured
-   state at the time specified by its --delay variable. The DEL strikethrough
-   is drawn by a pseudo-element so the line itself can animate left-to-right. */
+/* Chips use semantic <ins> / <del> elements so the meaning (kept vs
+   eliminated) survives even if our custom CSS doesn't load — browsers
+   render <del> with a default strikethrough as the ultimate fallback,
+   and screen readers announce "deleted" / "inserted".
+
+   The default styles ARE the final coloured/struck-through state,
+   so even if animations are disabled the meaning is clear. The
+   entrance animation plays from neutral -> final via fill-mode:
+   backwards (delay period shows 0% keyframe, then animates to 100%).
+   No JS required. */
 .opt-add, .opt-del {
   display: inline-block;
   font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
@@ -263,26 +269,27 @@ img, svg { display: block; max-width: 100%; }
   white-space: nowrap;
   vertical-align: baseline;
   position: relative;
-
-  /* Neutral pre-animation state */
-  color: var(--muted);
-  background-color: rgba(0, 0, 0, 0.045);
   font-weight: 600;
-  text-decoration: none;
-  opacity: 1;
-  transform: scale(1);
-
-  /* Slower, smoother fade so the green/red hue change is clearly visible.
-     Uses background-color (not the background shorthand) so the transition
-     reliably interpolates the colour. */
-  transition:
-    color            0.75s ease-out,
-    background-color 0.75s ease-out,
-    opacity          0.75s ease-out,
-    transform        0.55s cubic-bezier(.2,.8,.2,1.2);
+  text-decoration: none;   /* override the browser-default strikethrough on <del>
+                              and underline on <ins> — we draw our own. */
 }
 
-/* DEL strikethrough — drawn by a pseudo-element so it can animate */
+.opt-del {
+  color: #c0392b;
+  background-color: rgba(192, 57, 43, 0.07);
+  opacity: 0.7;
+  animation: chip-del 0.75s ease-out calc(0.45s + var(--delay, 0s)) backwards;
+}
+
+.opt-add {
+  color: #1a7a3e;
+  background-color: rgba(26, 122, 62, 0.12);
+  animation: chip-add 0.75s ease-out calc(0.45s + var(--delay, 0s)) backwards;
+}
+
+/* DEL strikethrough — drawn by a pseudo-element so it animates left-to-right
+   on top of the (overridden) browser default. Default state = drawn (scaleX
+   1) so the line is present even without animation. */
 .opt-del::after {
   content: '';
   position: absolute;
@@ -290,49 +297,53 @@ img, svg { display: block; max-width: 100%; }
   top: 50%;
   height: 1.5px;
   background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.4s ease-out;
-  pointer-events: none;
-}
-
-/* Animated end-state, gated by .hero-points.chips-go */
-.hero-points.chips-go .opt-del {
-  color: #c0392b;
-  background-color: rgba(192, 57, 43, 0.07);
-  opacity: 0.7;
-  transition-delay: var(--delay, 0s);
-}
-.hero-points.chips-go .opt-del::after {
   transform: scaleX(1);
-  transition-delay: var(--delay, 0s);
-}
-.hero-points.chips-go .opt-add {
-  color: #1a7a3e;
-  background-color: rgba(26, 122, 62, 0.12);
-  /* Tiny scale-pop accentuates the "this is the chosen option" moment */
-  animation: chip-pop 0.65s ease-out var(--delay, 0s) both;
-  transition-delay: var(--delay, 0s);
-}
-@keyframes chip-pop {
-  0%   { transform: scale(1);    }
-  55%  { transform: scale(1.08); }
-  100% { transform: scale(1);    }
+  transform-origin: left center;
+  pointer-events: none;
+  animation: chip-del-strike 0.4s ease-out calc(0.45s + var(--delay, 0s)) backwards;
 }
 
-/* Respect prefers-reduced-motion — skip animation, apply final state immediately */
-@media (prefers-reduced-motion: reduce) {
-  .opt-add, .opt-del { transition: none; animation: none; }
-  .opt-del::after { transition: none; transform: scaleX(1); }
-  .opt-del {
+@keyframes chip-del {
+  0% {
+    color: var(--muted);
+    background-color: rgba(0, 0, 0, 0.045);
+    opacity: 1;
+  }
+  100% {
     color: #c0392b;
     background-color: rgba(192, 57, 43, 0.07);
     opacity: 0.7;
   }
-  .opt-add {
+}
+
+@keyframes chip-add {
+  0% {
+    color: var(--muted);
+    background-color: rgba(0, 0, 0, 0.045);
+    transform: scale(1);
+  }
+  60% {
     color: #1a7a3e;
     background-color: rgba(26, 122, 62, 0.12);
+    transform: scale(1.08);
   }
+  100% {
+    color: #1a7a3e;
+    background-color: rgba(26, 122, 62, 0.12);
+    transform: scale(1);
+  }
+}
+
+@keyframes chip-del-strike {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+/* Respect prefers-reduced-motion — skip animation, default styles already
+   represent the final state so meaning is preserved. */
+@media (prefers-reduced-motion: reduce) {
+  .opt-add, .opt-del,
+  .opt-del::after { animation: none; }
 }
 .hero p {
   font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5;
