@@ -66,8 +66,8 @@ img, svg { display: block; max-width: 100%; }
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
 }
-.brand { display: flex; align-items: center; gap: 10px; }
-.brand-logo { height: 30px; width: auto; }
+.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.brand-logo { height: 30px; width: auto; display: block; }
 /* Nav now uses flex:1 so it spans the space between brand and the right edge.
    The first non-button link gets margin-left:auto to push the link cluster
    away from the brand, and the .btn (Request access) gets its own
@@ -84,6 +84,7 @@ img, svg { display: block; max-width: 100%; }
 .nav a {
   font-size: 14px; color: var(--muted); font-weight: 500;
   padding: 8px 16px; border-radius: 999px;
+  white-space: nowrap;
   transition: color .15s var(--ease), background .15s var(--ease);
 }
 .nav a:hover { color: var(--ink); background: rgba(0, 0, 0, 0.04); }
@@ -91,10 +92,17 @@ img, svg { display: block; max-width: 100%; }
 .nav a.btn { background: var(--ink); color: var(--paper); padding: 9px 18px; }
 .nav a.btn:hover { background: var(--ink-soft); color: var(--paper); }
 @media (max-width: 640px) {
-  .nav { gap: 4px; margin-left: 12px; }
-  .nav a { padding: 6px 12px; font-size: 13px; }
+  .nav { gap: 2px; margin-left: 10px; }
+  .nav a { padding: 6px 10px; font-size: 13px; }
   .nav-link-extra { display: none; }
   .topbar-inner { padding: 0 6px 0 14px; }
+  .brand-logo { height: 26px; }
+}
+@media (max-width: 420px) {
+  .nav { margin-left: 6px; }
+  .nav a { padding: 5px 7px; font-size: 12px; }
+  .topbar-inner { padding: 0 4px 0 10px; }
+  .brand-logo { height: 24px; }
 }
 
 /* ── Buttons ──────────────────────────────────────────────────────── */
