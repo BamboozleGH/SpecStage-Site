@@ -68,6 +68,11 @@ img, svg { display: block; max-width: 100%; }
 }
 .brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .brand-logo { height: 30px; width: auto; display: block; }
+/* Two brand variants: full wordmark on desktop, bracket icon-only on
+   mobile so the topbar pill stays compact. The mobile swap happens
+   inside the @media (max-width: 640px) block below. */
+.brand-logo-mark { display: none; fill: currentColor; color: var(--ink); }
+.lbl-short { display: none; }
 /* Nav now uses flex:1 so it spans the space between brand and the right edge.
    The first non-button link gets margin-left:auto to push the link cluster
    away from the brand, and the .btn (Request access) gets its own
@@ -92,15 +97,22 @@ img, svg { display: block; max-width: 100%; }
 .nav a.btn { background: var(--ink); color: var(--paper); padding: 9px 18px; }
 .nav a.btn:hover { background: var(--ink-soft); color: var(--paper); }
 @media (max-width: 640px) {
-  .nav { gap: 2px; margin-left: 10px; }
-  .nav a { padding: 6px 10px; font-size: 13px; }
-  .nav a.nav-link-extra { display: none; }
-  .topbar-inner { padding: 0 6px 0 14px; }
+  .nav { gap: 2px; margin-left: 8px; }
+  .nav a { padding: 6px 9px; font-size: 13px; }
+  .nav a.btn { padding: 7px 11px; font-size: 12px; }
+  .topbar-inner { padding: 0 6px 0 12px; }
   .brand-logo { height: 26px; }
+  /* Swap full-wordmark logo for bracket-icon mark, and swap
+     "Request access" text for "Apply" — both keep the pill compact. */
+  .brand-logo-full { display: none; }
+  .brand-logo-mark { display: block; }
+  .lbl-full { display: none; }
+  .lbl-short { display: inline; }
 }
-@media (max-width: 420px) {
-  .nav { margin-left: 6px; }
+@media (max-width: 380px) {
+  .nav { margin-left: 4px; }
   .nav a { padding: 5px 7px; font-size: 12px; }
+  .nav a.btn { padding: 6px 9px; }
   .topbar-inner { padding: 0 4px 0 10px; }
   .brand-logo { height: 24px; }
 }
