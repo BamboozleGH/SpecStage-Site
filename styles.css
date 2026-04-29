@@ -94,7 +94,7 @@ img, svg { display: block; max-width: 100%; }
 @media (max-width: 640px) {
   .nav { gap: 2px; margin-left: 10px; }
   .nav a { padding: 6px 10px; font-size: 13px; }
-  .nav-link-extra { display: none; }
+  .nav a.nav-link-extra { display: none; }
   .topbar-inner { padding: 0 6px 0 14px; }
   .brand-logo { height: 26px; }
 }
