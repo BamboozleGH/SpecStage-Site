@@ -31,6 +31,32 @@
 
   <link rel="stylesheet" href="/styles.css?v=62">
 
+  <!-- Structured data: Organization (shared across all pages via @id) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://www.specstage.com/#organization",
+    "name": "SpecStage",
+    "url": "https://www.specstage.com/",
+    "logo": "https://www.specstage.com/logo.svg",
+    "email": "hello@specstage.com",
+    "description": "AI-assisted, engineer-controlled tailoring of UFGS master specifications for federal construction projects."
+  }
+  </script>
+
+  <!-- Structured data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home",         "item": "https://www.specstage.com/" },
+      { "@type": "ListItem", "position": 2, "name": "How it works", "item": "https://www.specstage.com/how-it-works" }
+    ]
+  }
+  </script>
+
   <script>window.GA_MEASUREMENT_ID = 'G-NXYJVHPJW2';</script>
 </head>
 <body>
