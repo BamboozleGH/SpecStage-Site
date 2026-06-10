@@ -1,5 +1,10 @@
 'use strict';
 
+// Gate for reveal-on-scroll hidden states: styles.css only hides .reveal
+// elements under html.js, so if this script never runs (blocked, failed,
+// disabled) every section stays visible.
+document.documentElement.classList.add('js');
+
 // ── Footer year ─────────────────────────────────────────────────
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -133,6 +138,22 @@ if (revealEls.length && 'IntersectionObserver' in window) {
   revealEls.forEach(el => io.observe(el));
 } else {
   revealEls.forEach(el => el.classList.add('in'));
+}
+
+// ── Workflow timeline (how-it-works) ────────────────────────────
+// As each .stage scrolls into view, .stage-active draws its ink line
+// segment and fills the stage number (see styles.css). One-shot per
+// stage, same pattern as the reveal observer above.
+const stageEls = document.querySelectorAll('.stage');
+if (stageEls.length && 'IntersectionObserver' in window) {
+  const so = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('stage-active'); so.unobserve(e.target); }
+    });
+  }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
+  stageEls.forEach(el => so.observe(el));
+} else {
+  stageEls.forEach(el => el.classList.add('stage-active'));
 }
 
 // ── Cookie consent + Google Analytics ───────────────────────────

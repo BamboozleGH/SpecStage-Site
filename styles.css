@@ -133,9 +133,35 @@ img, svg { display: block; max-width: 100%; }
 .btn-ghost { background: transparent; color: var(--ink); }
 .btn-ghost:hover { background: var(--paper-soft); }
 .btn-sm { padding: 9px 14px; font-size: 13px; }
+.btn:focus-visible, .nav a:focus-visible, a:focus-visible {
+  outline: 2px solid var(--ink); outline-offset: 3px; border-radius: var(--radius);
+}
+.cta-band .btn:focus-visible { outline-color: var(--paper); }
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn .arrow { transition: none; }
+  .btn:hover { transform: none; }
+  .btn:hover .arrow { transform: none; }
+}
 
 /* ── Hero ─────────────────────────────────────────────────────────── */
-.hero { padding-top: clamp(72px, 13vw, 132px); padding-bottom: clamp(80px, 14vw, 140px); }
+.hero {
+  position: relative;
+  padding-top: clamp(72px, 13vw, 132px); padding-bottom: clamp(80px, 14vw, 140px);
+}
+/* Faint ruled-paper texture behind the hero — evokes a spec page without
+   reading as decoration. Masked so it fades toward the lower-left where
+   the copy sits. */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(180deg,
+    transparent 0, transparent 35px,
+    rgba(10, 10, 10, 0.05) 35px, rgba(10, 10, 10, 0.05) 36px);
+  -webkit-mask-image: radial-gradient(ellipse 75% 85% at 88% 12%, #000 0%, transparent 68%);
+          mask-image: radial-gradient(ellipse 75% 85% at 88% 12%, #000 0%, transparent 68%);
+  pointer-events: none;
+}
+.hero > .wrap { position: relative; }
 /* Hero shares the standard .wrap container (max-width: var(--max), now 1320px)
    so it aligns with the rest of the page. The bullets fit because we override
    the .hero p specificity trap below — not because we widen the hero alone. */
@@ -359,10 +385,19 @@ img, svg { display: block; max-width: 100%; }
 .hero-meta strong { color: var(--ink); font-weight: 600; }
 
 /* ── Section headings ─────────────────────────────────────────────── */
+/* Eyebrows wear the brand brackets — quiet monospace [ ] around the label. */
 .section-eyebrow {
   font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em;
   color: var(--muted); margin-bottom: 16px;
 }
+.section-eyebrow::before,
+.section-eyebrow::after {
+  font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-weight: 600;
+  color: rgba(10, 10, 10, 0.32);
+}
+.section-eyebrow::before { content: '[ '; }
+.section-eyebrow::after  { content: ' ]'; }
 .section-h {
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 700; line-height: 1.1; letter-spacing: -0.025em;
@@ -697,15 +732,34 @@ img, svg { display: block; max-width: 100%; }
   border-radius: var(--radius); overflow: hidden;
 }
 .card {
+  position: relative;
   background: var(--paper); padding: 36px 32px;
   display: flex; flex-direction: column;
   transition: background .25s var(--ease);
 }
 .card:hover { background: var(--paper-soft); }
+/* Accent rule that draws across the top of a card on hover — the same
+   left-to-right draw as the hero DEL strikethrough, repurposed as polish. */
+.card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--ink);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .35s var(--ease);
+  pointer-events: none;
+}
+.card:hover::after { transform: scaleX(1); }
 .card-icon {
   width: 36px; height: 36px;
   display: grid; place-items: center;
   margin-bottom: 24px;
+}
+.card-icon svg { transition: transform .3s var(--ease); }
+.card:hover .card-icon svg { transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) {
+  .card::after { transition: none; }
+  .card-icon svg { transition: none; }
+  .card:hover .card-icon svg { transform: none; }
 }
 .card h3 {
   font-size: 18px; font-weight: 600; letter-spacing: -0.015em;
@@ -714,18 +768,36 @@ img, svg { display: block; max-width: 100%; }
 .card p { font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); }
 
 /* ── Pipeline stages (How it works) ───────────────────────────────── */
+/* Animated workflow timeline: a faint base rail is always present; as each
+   stage scrolls into view (site.js adds .stage-active) an ink segment draws
+   down its left edge and the stage number fills in. Without JS the base
+   rail + outlined numbers render as a clean static diagram. */
 .stages { display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--line); margin-left: 12px; }
 .stage { position: relative; padding: 28px 0 28px 40px; }
 .stage:not(:last-child) { border-bottom: 1px dashed var(--line); }
+.stage::before {
+  content: '';
+  position: absolute; left: -2px; top: 0; bottom: 0; width: 2px;
+  background: var(--ink);
+  transform: scaleY(0); transform-origin: top center;
+  transition: transform .7s var(--ease);
+  pointer-events: none;
+}
+.stage.stage-active::before { transform: scaleY(1); }
 .stage-num {
   position: absolute; left: -13px; top: 32px;
   width: 26px; height: 26px;
   background: var(--paper); border: 1px solid var(--ink); border-radius: 50%;
   display: grid; place-items: center;
   font-size: 11px; font-weight: 700;
+  transition: background .4s var(--ease) .25s, color .4s var(--ease) .25s;
 }
+.stage.stage-active .stage-num { background: var(--ink); color: var(--paper); }
 .stage h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 8px; }
 .stage p  { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; max-width: 620px; }
+@media (prefers-reduced-motion: reduce) {
+  .stage::before, .stage-num { transition: none; }
+}
 .stage code {
   font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   font-size: 12.5px; padding: 2px 6px;
@@ -758,10 +830,19 @@ img, svg { display: block; max-width: 100%; }
 
 /* ── CTA band ─────────────────────────────────────────────────────── */
 .cta-band {
+  position: relative; overflow: hidden;
   background: var(--ink); color: var(--paper);
   padding: clamp(64px, 9vw, 96px) var(--pad-x);
   border-radius: var(--radius); margin: 0 var(--pad-x);
 }
+/* Brand brackets framing the band — the bracket-frame motif inverted. */
+.cta-band::before, .cta-band::after {
+  content: ''; position: absolute; top: 20px; bottom: 20px; width: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+}
+.cta-band::before { left: 20px; border-right: none; }
+.cta-band::after  { right: 20px; border-left: none; }
 .cta-band-inner { max-width: var(--max); margin: 0 auto; text-align: center; }
 .cta-band h2 {
   font-size: clamp(28px, 4vw, 44px); font-weight: 700;
@@ -813,7 +894,8 @@ img, svg { display: block; max-width: 100%; }
 @media (max-width: 480px) {
   .values { grid-template-columns: 1fr; }
 }
-.value { background: var(--paper); padding: 28px; }
+.value { background: var(--paper); padding: 28px; transition: background .25s var(--ease); }
+.value:hover { background: var(--paper-soft); }
 .value h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
 .value p { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
 
@@ -851,10 +933,47 @@ img, svg { display: block; max-width: 100%; }
 .cookie-actions button.primary:hover { background: #f0f0f0; }
 
 /* ── Reveal-on-scroll ─────────────────────────────────────────────── */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.in { opacity: 1; transform: translateY(0); }
+/* Hidden states are gated behind html.js (set first thing in site.js)
+   so content stays visible if JS never runs. */
+html.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+html.js .reveal.in { opacity: 1; transform: translateY(0); }
+
+/* Staggered child reveals — grouped containers fade as a unit but their
+   children rise in sequence, which reads as composed rather than dumped. */
+html.js .cards.reveal,
+html.js .values.reveal,
+html.js .pain-list.reveal { transform: none; }
+html.js .cards.reveal > .card,
+html.js .values.reveal > .value,
+html.js .pain-list.reveal > li {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .55s var(--ease), transform .55s var(--ease);
+}
+html.js .cards.reveal.in > .card,
+html.js .values.reveal.in > .value,
+html.js .pain-list.reveal.in > li { opacity: 1; transform: translateY(0); }
+html.js .cards.reveal.in > *:nth-child(2),
+html.js .values.reveal.in > *:nth-child(2) { transition-delay: .08s; }
+html.js .cards.reveal.in > *:nth-child(3),
+html.js .values.reveal.in > *:nth-child(3) { transition-delay: .16s; }
+html.js .cards.reveal.in > *:nth-child(4),
+html.js .values.reveal.in > *:nth-child(4) { transition-delay: .24s; }
+html.js .cards.reveal.in > *:nth-child(5),
+html.js .values.reveal.in > *:nth-child(5) { transition-delay: .32s; }
+html.js .cards.reveal.in > *:nth-child(6),
+html.js .values.reveal.in > *:nth-child(6) { transition-delay: .40s; }
+html.js .pain-list.reveal.in > li:nth-child(2) { transition-delay: .06s; }
+html.js .pain-list.reveal.in > li:nth-child(3) { transition-delay: .12s; }
+html.js .pain-list.reveal.in > li:nth-child(4) { transition-delay: .18s; }
+html.js .pain-list.reveal.in > li:nth-child(5) { transition-delay: .24s; }
+html.js .pain-list.reveal.in > li:nth-child(6) { transition-delay: .30s; }
+html.js .pain-list.reveal.in > li:nth-child(7) { transition-delay: .36s; }
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  html.js .reveal,
+  html.js .cards.reveal > .card,
+  html.js .values.reveal > .value,
+  html.js .pain-list.reveal > li { opacity: 1; transform: none; transition: none; }
   .hero-eyebrow .dot { animation: none; }
   html { scroll-behavior: auto; }
 }
