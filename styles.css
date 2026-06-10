@@ -21,7 +21,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Zen Kaku Gothic New', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.55;
   color: var(--ink);
@@ -887,13 +887,21 @@ img, svg { display: block; max-width: 100%; }
   align-content: center;
 }
 .stage-chips li {
-  padding: 8px 15px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 15px 8px 12px;
   border: 1px solid var(--line); border-radius: 999px;
   background: var(--paper);
   font-size: 13px; font-weight: 500; color: var(--ink-soft);
   transition: opacity .45s var(--ease), transform .45s var(--ease), border-color .45s var(--ease);
 }
+.stage-chips li svg {
+  width: 15px; height: 15px; flex-shrink: 0;
+  fill: none; stroke: var(--muted);
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  transition: stroke .4s var(--ease);
+}
 .stage.stage-active .stage-chips li { border-color: #cfcfcf; }
+.stage.stage-active .stage-chips li svg { stroke: var(--ink); }
 html.js .stage .stage-chips li { opacity: 0; transform: translateY(8px); }
 html.js .stage.stage-active .stage-chips li { opacity: 1; transform: none; }
 .stage-chips li:nth-child(2) { transition-delay: .06s; }
@@ -1134,8 +1142,35 @@ html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease
 @media (max-width: 480px) {
   .values { grid-template-columns: 1fr; }
 }
-.value { background: var(--paper); padding: 28px; transition: background .25s var(--ease); }
+.value { position: relative; background: var(--paper); padding: 28px; transition: background .25s var(--ease); }
 .value:hover { background: var(--paper-soft); }
+/* Same top accent rule as the home capability cards. */
+.value::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--ink);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .35s var(--ease);
+  pointer-events: none;
+}
+.value:hover::after { transform: scaleX(1); }
+.value-icon {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  margin-bottom: 16px;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--paper-soft);
+  transition: border-color .25s var(--ease);
+}
+.value:hover .value-icon { border-color: #cfcfcf; }
+.value-icon svg {
+  width: 20px; height: 20px;
+  fill: none; stroke: var(--ink);
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+@media (prefers-reduced-motion: reduce) {
+  .value::after { transition: none; }
+}
 .value h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
 .value p { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
 
