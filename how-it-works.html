@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="/styles.css?v=65">
+  <link rel="stylesheet" href="/styles.css?v=66">
 
   <!-- Structured data: Organization (shared across all pages via @id) -->
   <script type="application/ld+json">
@@ -92,44 +92,103 @@
 
           <div class="stage">
             <span class="stage-num">1</span>
-            <h3>Start from a pinned UFGS master library</h3>
-            <p>Install official UFGS master file releases directly in SpecStage — from a folder or zip — and browse them in a read-only master viewer. Every project is pinned to the library version it was created against, so a new UFGS release never silently changes a project in progress.</p>
+            <div class="stage-main">
+              <h3>Start from a pinned UFGS master library</h3>
+              <p>Install official UFGS releases from a folder or zip and browse them in a read-only master viewer. Every project stays pinned to the library version it was created against — a new release never silently changes work in progress.</p>
+            </div>
+            <ul class="stage-chips">
+              <li>Folder or zip install</li>
+              <li>Read-only master viewer</li>
+              <li>Version-locked projects</li>
+            </ul>
           </div>
 
           <div class="stage">
             <span class="stage-num">2</span>
-            <h3>Upload project documents</h3>
-            <p>Drop your RFP, design criteria, drawings, and supporting documentation into a single project workspace. SpecStage accepts PDF, Word, Excel, image, and text formats and uses these inputs as the foundation for every downstream decision.</p>
+            <div class="stage-main">
+              <h3>Upload project documents</h3>
+              <p>Drop your RFP, design criteria, drawings, and supporting documentation into a single project workspace. These inputs drive every downstream decision.</p>
+            </div>
+            <ul class="stage-chips">
+              <li>PDF</li>
+              <li>Word</li>
+              <li>Excel</li>
+              <li>Images</li>
+              <li>Text</li>
+            </ul>
           </div>
 
           <div class="stage">
             <span class="stage-num">3</span>
-            <h3>AI-assisted section recommendation</h3>
-            <p>SpecStage reviews the uploaded documents and recommends the UFGS specification sections relevant to your project scope. Every recommendation is shown for engineer confirmation; sections can be added or removed before any tailoring begins. No section is processed without explicit approval.</p>
+            <div class="stage-main">
+              <h3>AI-assisted section recommendation</h3>
+              <p>SpecStage reads the documents and recommends the UFGS sections relevant to your scope. No section is processed without your confirmation.</p>
+            </div>
+            <ul class="stage-chips">
+              <li>Scope-based shortlist</li>
+              <li>Add or remove sections</li>
+              <li>Explicit approval</li>
+            </ul>
           </div>
 
           <div class="stage">
             <span class="stage-num">4</span>
-            <h3>Project-aware tailoring</h3>
-            <p>Each selected section is tailored against the project's full context — branch, location, scope, mission criticality, host-nation considerations, and any additional options the engineer has configured. Tailoring resolves bracketed options, fill-in values, non-applicable paragraphs, table-row applicability, references, and submittal requirements as part of this step.</p>
+            <div class="stage-main">
+              <h3>Project-aware tailoring</h3>
+              <p>Each section is tailored against the project's full context — branch, location, scope, and the options you've configured — with the rationale recorded for every decision.</p>
+            </div>
+            <ul class="stage-chips">
+              <li>Brackets</li>
+              <li>Fill-ins</li>
+              <li>Paragraph applicability</li>
+              <li>Table rows</li>
+              <li>References &amp; submittals</li>
+              <li>Host-nation (OCONUS)</li>
+            </ul>
           </div>
 
           <div class="stage">
             <span class="stage-num">5</span>
-            <h3>Review and approve — in the spec</h3>
-            <p>Tailored sections render in a SpecsIntact-style view with revision marks, and every AI decision is anchored to the exact text it affects, with its rationale and confidence. Engineers accept, override, or defer each decision inline; overrides flow straight into the deliverable, and they survive re-runs. When a section is right, the engineer approves it — approval is gated on the output being current with every review decision.</p>
+            <div class="stage-main">
+              <h3>Review and approve — in the spec</h3>
+              <p>Sections render in a SpecsIntact-style view with revision marks, every decision anchored to the exact text it affects. Your overrides flow straight into the deliverable — and survive re-runs.</p>
+            </div>
+            <ul class="stage-chips">
+              <li>Accept / override / defer</li>
+              <li>Rationale &amp; confidence</li>
+              <li>Revision marks</li>
+              <li>Freshness-gated approval</li>
+            </ul>
           </div>
 
           <div class="stage">
             <span class="stage-num">6</span>
-            <h3>Audit requirement coverage</h3>
-            <p>SpecStage extracts the requirements stated in your project documents — each with its source quote — and checks whether the tailored sections actually address them. Findings land in a Coverage Register with evidence: covered, partially covered, or likely gap. Engineers disposition each finding, and for confirmed gaps SpecStage drafts candidate language and places it in the spec as a clearly-marked draft for engineer review. The register exports to Excel.</p>
+            <div class="stage-main">
+              <h3>Audit requirement coverage</h3>
+              <p>Requirements extracted from your documents — each with its source quote — are checked against the tailored sections. Gaps surface with evidence, and AI-drafted language lands in the spec for your review.</p>
+            </div>
+            <ul class="stage-chips">
+              <li>Coverage Register</li>
+              <li>Evidence-backed verdicts</li>
+              <li>Reviewer dispositions</li>
+              <li>AI gap drafts</li>
+              <li>Excel export</li>
+            </ul>
           </div>
 
           <div class="stage">
             <span class="stage-num">7</span>
-            <h3>Export</h3>
-            <p>Approved sections export as SpecsIntact-compatible specification files for direct integration into your existing workflow. The full export suite also produces per-section PDFs, a combined project PDF with cover page and table of contents, a Submittal Register in Excel and PDF, a complete decision audit log, and a portable project bundle another SpecStage user can import and continue working on.</p>
+            <div class="stage-main">
+              <h3>Export</h3>
+              <p>Approved sections export for direct use in your existing workflow — no format changes, no new process.</p>
+            </div>
+            <ul class="stage-chips">
+              <li>SpecsIntact .SEC</li>
+              <li>Section &amp; project PDF</li>
+              <li>Submittal Register (Excel + PDF)</li>
+              <li>Decision audit log</li>
+              <li>Portable .specstage bundle</li>
+            </ul>
           </div>
 
         </div>
@@ -203,6 +262,6 @@
     </div>
   </div>
 
-  <script src="/site.js?v=65" defer></script>
+  <script src="/site.js?v=66" defer></script>
 </body>
 </html>

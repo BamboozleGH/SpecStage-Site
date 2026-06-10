@@ -409,10 +409,7 @@ img, svg { display: block; max-width: 100%; }
 }
 
 /* ── "Why this matters" pain grid ─────────────────────────────────── */
-/* Two-column grid of spec-numbered tasks. As the grid reveals, each
-   task is struck through red — SpecStage crossing the manual work off
-   the list. The struck state is the default so the message reads
-   correctly without JS or animation. */
+/* Compact two-column grid of spec-numbered tasks. */
 .pain-grid {
   list-style: none;
   padding: 0;
@@ -439,28 +436,6 @@ img, svg { display: block; max-width: 100%; }
   color: var(--muted);
   min-width: 28px; flex-shrink: 0;
 }
-.pain-text { position: relative; }
-.pain-text::after {
-  content: '';
-  position: absolute; left: -2px; right: -2px; top: 55%; height: 1.5px;
-  background: #c0392b; opacity: 0.7;
-  transform: scaleX(1); transform-origin: left center;
-  pointer-events: none;
-}
-/* Strikes draw left-to-right in sequence once the grid is revealed. */
-html.js .pain-grid.reveal .pain-text::after { transform: scaleX(0); }
-html.js .pain-grid.reveal.in .pain-text::after {
-  transform: scaleX(1);
-  transition: transform .45s var(--ease);
-  transition-delay: calc(.85s + var(--strike, 0s));
-}
-.pain-grid li:nth-child(1) .pain-text::after { --strike: 0s; }
-.pain-grid li:nth-child(2) .pain-text::after { --strike: .14s; }
-.pain-grid li:nth-child(3) .pain-text::after { --strike: .28s; }
-.pain-grid li:nth-child(4) .pain-text::after { --strike: .42s; }
-.pain-grid li:nth-child(5) .pain-text::after { --strike: .56s; }
-.pain-grid li:nth-child(6) .pain-text::after { --strike: .70s; }
-.pain-grid li:nth-child(7) .pain-text::after { --strike: .84s; }
 .section-closer {
   font-size: clamp(17px, 1.4vw, 20px);
   color: var(--ink);
@@ -797,6 +772,67 @@ html.js .pain-grid.reveal.in .pain-text::after {
   .card-icon svg { transition: none; }
   .card:hover .card-icon svg { transform: none; }
 }
+
+/* Card mini-vignettes — small monospace product sketches that replace
+   the abstract stroke icons. Each shows the feature doing its job. */
+.card-viz {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper-soft);
+  padding: 14px 16px;
+  margin-bottom: 22px;
+  min-height: 106px;
+  font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-size: 11.5px; line-height: 1.7; color: var(--ink-soft);
+  display: flex; flex-direction: column; justify-content: center; gap: 7px;
+  overflow: hidden;
+  transition: border-color .25s var(--ease);
+}
+.card:hover .card-viz { border-color: #cfcfcf; }
+.viz-row {
+  display: flex; align-items: center; gap: 9px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.viz-dim { color: var(--muted); }
+.viz-tick {
+  width: 15px; height: 15px; border-radius: 50%;
+  background: rgba(26, 122, 62, 0.12); color: #1a7a3e;
+  display: grid; place-items: center;
+  font-size: 9px; font-weight: 700; flex-shrink: 0;
+}
+.viz-untick { background: transparent; border: 1px solid var(--line); }
+.viz-line { margin: 0; }
+.viz-note { color: var(--muted); font-size: 10.5px; }
+.viz-actions { display: flex; gap: 6px; margin-top: 2px; }
+.viz-pill {
+  padding: 3px 10px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--paper);
+  font-size: 10.5px; font-weight: 600; color: var(--muted);
+}
+.viz-pill-on { border-color: rgba(26, 122, 62, 0.45); color: #1a5a2e; background: rgba(26, 122, 62, 0.08); }
+.viz-anchor { background: rgba(26, 122, 62, 0.14); padding: 0 3px; border-radius: 3px; }
+.viz-status {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.05em;
+  padding: 2px 8px; border-radius: 999px; flex-shrink: 0;
+}
+.viz-ok   { background: rgba(26, 122, 62, 0.12); color: #1a5a2e; }
+.viz-part { background: rgba(176, 125, 18, 0.16); color: #7a5a10; }
+.viz-gap  { background: rgba(192, 57, 43, 0.12); color: #8a2820; }
+.viz-q { color: var(--ink); font-weight: 600; }
+.viz-cite {
+  background: rgba(10, 10, 10, 0.06);
+  border: 1px solid var(--line); border-radius: 3px;
+  padding: 0 5px;
+  font-weight: 600; color: var(--ink); white-space: nowrap;
+}
+.viz-files { display: flex; gap: 8px; flex-wrap: wrap; }
+.viz-file {
+  padding: 5px 10px;
+  border: 1px solid var(--line); border-radius: 5px;
+  background: var(--paper);
+  font-size: 11px; font-weight: 700; color: var(--ink);
+}
 .card h3 {
   font-size: 18px; font-weight: 600; letter-spacing: -0.015em;
   margin-bottom: 10px;
@@ -823,8 +859,45 @@ html.js .pain-grid.reveal.in .pain-text::after {
   transition: transform .25s linear; /* smooths between scroll frames */
   pointer-events: none;
 }
-.stage { position: relative; padding: 28px 0 28px 40px; }
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 12px 64px;
+  align-items: center;
+  padding: 30px 0 30px 44px;
+}
 .stage:not(:last-child) { border-bottom: 1px dashed var(--line); }
+.stage-main { max-width: 640px; }
+/* Feature chips — scannable facts beside each stage so the right half
+   of the page works instead of sitting empty. They rise in when the
+   timeline reaches the stage (.stage-active from site.js). */
+.stage-chips {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-wrap: wrap; gap: 9px;
+  align-content: center;
+}
+.stage-chips li {
+  padding: 8px 15px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--paper);
+  font-size: 13px; font-weight: 500; color: var(--ink-soft);
+  transition: opacity .45s var(--ease), transform .45s var(--ease), border-color .45s var(--ease);
+}
+.stage.stage-active .stage-chips li { border-color: #cfcfcf; }
+html.js .stage .stage-chips li { opacity: 0; transform: translateY(8px); }
+html.js .stage.stage-active .stage-chips li { opacity: 1; transform: none; }
+.stage-chips li:nth-child(2) { transition-delay: .06s; }
+.stage-chips li:nth-child(3) { transition-delay: .12s; }
+.stage-chips li:nth-child(4) { transition-delay: .18s; }
+.stage-chips li:nth-child(5) { transition-delay: .24s; }
+.stage-chips li:nth-child(6) { transition-delay: .30s; }
+@media (max-width: 880px) {
+  .stage { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .stage .stage-chips li { opacity: 1; transform: none; transition: none; }
+}
 .stage-num {
   position: absolute; left: -13px; top: 32px;
   width: 26px; height: 26px;
@@ -916,7 +989,8 @@ html.js .pain-grid.reveal.in .pain-text::after {
   color: var(--muted);
 }
 .spec-demo .sd-line { display: flex; gap: 12px; padding: 11px 18px 0; margin: 0; max-width: none; }
-.sd-pnum { color: var(--muted); flex-shrink: 0; }
+.sd-pnum { color: var(--muted); flex-shrink: 0; min-width: 36px; }
+.sd-art .sd-text { font-weight: 700; color: var(--ink); }
 .sd-del, .sd-add {
   padding: 0 4px; border-radius: 3px;
   font-weight: 600; white-space: nowrap;
@@ -931,18 +1005,19 @@ html.js .pain-grid.reveal.in .pain-text::after {
   pointer-events: none;
 }
 .sd-add { color: #1a7a3e; background: rgba(26, 122, 62, 0.12); }
-.sd-fill { display: inline-grid; vertical-align: baseline; }
-.sd-fill > span { grid-area: 1 / 1; white-space: nowrap; }
-.sd-blank { opacity: 0; color: var(--muted); }
-.sd-value { color: #1a7a3e; font-weight: 600; }
-.sd-removed .sd-text { position: relative; color: var(--muted); }
-.sd-removed .sd-text::after {
+/* Deleted article: number AND title are struck — matching how a removed
+   bracket-alternative article reads in SpecsIntact. */
+.sd-removed .sd-text,
+.sd-removed .sd-pnum { position: relative; color: var(--muted); font-weight: 400; }
+.sd-removed .sd-text::after,
+.sd-removed .sd-pnum::after {
   content: '';
   position: absolute; left: 0; right: 0; top: 52%; height: 1.5px;
   background: #c0392b; opacity: 0.7;
   transform: scaleX(1); transform-origin: left center;
   pointer-events: none;
 }
+.sd-removed .sd-pnum::after { right: 8px; }
 .sd-badge {
   display: inline-flex; align-items: center; gap: 8px;
   margin: 18px 18px 0;
@@ -963,15 +1038,13 @@ html.js .pain-grid.reveal.in .pain-text::after {
    with the hero (chip-del / chip-add / chip-del-strike). */
 html.js .decide-band.reveal.in .sd-del { animation: chip-del .55s ease-out var(--sd, .5s) backwards; }
 html.js .decide-band.reveal.in .sd-del::after { animation: chip-del-strike .35s ease-out var(--sd, .5s) backwards; }
-html.js .decide-band.reveal.in .sd-add { animation: chip-add .55s ease-out var(--sd, 1.15s) backwards; }
-html.js .decide-band.reveal.in .sd-blank { animation: sd-blank-out .3s ease-out 1.8s backwards; }
-html.js .decide-band.reveal.in .sd-value { animation: sd-value-in .45s ease-out 1.9s backwards; }
-html.js .decide-band.reveal.in .sd-removed .sd-text { animation: sd-removed-text .5s ease-out 2.5s backwards; }
-html.js .decide-band.reveal.in .sd-removed .sd-text::after { animation: chip-del-strike .45s ease-out 2.6s backwards; }
-html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease) 3.2s backwards; }
+html.js .decide-band.reveal.in .sd-add { animation: chip-add .55s ease-out var(--sd, 1.35s) backwards; }
+html.js .decide-band.reveal.in .sd-removed .sd-text,
+html.js .decide-band.reveal.in .sd-removed .sd-pnum { animation: sd-removed-text .5s ease-out 2.6s backwards; }
+html.js .decide-band.reveal.in .sd-removed .sd-text::after,
+html.js .decide-band.reveal.in .sd-removed .sd-pnum::after { animation: chip-del-strike .45s ease-out 2.7s backwards; }
+html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease) 3.3s backwards; }
 
-@keyframes sd-blank-out { 0% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes sd-value-in  { 0% { opacity: 0; transform: translateY(3px); } 100% { opacity: 1; transform: none; } }
 @keyframes sd-removed-text { 0% { color: var(--ink-soft); } 100% { color: var(--muted); } }
 @keyframes sd-badge-in { 0% { opacity: 0; transform: translateY(5px); } 100% { opacity: 1; transform: none; } }
 
@@ -979,10 +1052,10 @@ html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease
   html.js .decide-band.reveal.in .sd-del,
   html.js .decide-band.reveal.in .sd-del::after,
   html.js .decide-band.reveal.in .sd-add,
-  html.js .decide-band.reveal.in .sd-blank,
-  html.js .decide-band.reveal.in .sd-value,
   html.js .decide-band.reveal.in .sd-removed .sd-text,
+  html.js .decide-band.reveal.in .sd-removed .sd-pnum,
   html.js .decide-band.reveal.in .sd-removed .sd-text::after,
+  html.js .decide-band.reveal.in .sd-removed .sd-pnum::after,
   html.js .decide-band.reveal.in .sd-badge { animation: none; }
 }
 
@@ -1132,7 +1205,6 @@ html.js .pain-grid.reveal.in > li:nth-child(7) { transition-delay: .36s; }
   html.js .cards.reveal > .card,
   html.js .values.reveal > .value,
   html.js .pain-grid.reveal > li { opacity: 1; transform: none; transition: none; }
-  html.js .pain-grid.reveal .pain-text::after { transform: scaleX(1); transition: none; }
   .hero-eyebrow .dot { animation: none; }
   html { scroll-behavior: auto; }
 }
