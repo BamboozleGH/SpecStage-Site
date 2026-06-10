@@ -408,31 +408,59 @@ img, svg { display: block; max-width: 100%; }
   color: var(--ink-soft); max-width: 640px; margin-bottom: 56px;
 }
 
-/* ── "Why this matters" pain list ─────────────────────────────────── */
-.pain-list {
+/* ── "Why this matters" pain grid ─────────────────────────────────── */
+/* Two-column grid of spec-numbered tasks. As the grid reveals, each
+   task is struck through red — SpecStage crossing the manual work off
+   the list. The struck state is the default so the message reads
+   correctly without JS or animation. */
+.pain-grid {
   list-style: none;
   padding: 0;
-  margin: 8px 0 32px;
-  max-width: 720px;
+  margin: 8px 0 0;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 56px;
 }
-.pain-list li {
-  position: relative;
-  padding: 14px 0 14px 32px;
+@media (max-width: 720px) {
+  .pain-grid { grid-template-columns: 1fr; }
+}
+.pain-grid li {
+  display: flex; gap: 14px; align-items: baseline;
+  padding: 13px 0;
   border-bottom: 1px solid var(--line);
-  font-size: clamp(15px, 1.2vw, 17.5px);
+  font-size: clamp(15px, 1.2vw, 17px);
   color: var(--ink-soft);
   line-height: 1.5;
 }
-.pain-list li:last-child { border-bottom: none; }
-.pain-list li::before {
-  /* Subtle dash marker — quietly evokes the bracket/strike-through motif */
-  content: '';
-  position: absolute;
-  left: 0; top: 26px;
-  width: 18px; height: 1.5px;
-  background: var(--ink);
-  opacity: 0.45;
+.pain-num {
+  font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-size: 0.78em; font-weight: 600;
+  color: var(--muted);
+  min-width: 28px; flex-shrink: 0;
 }
+.pain-text { position: relative; }
+.pain-text::after {
+  content: '';
+  position: absolute; left: -2px; right: -2px; top: 55%; height: 1.5px;
+  background: #c0392b; opacity: 0.7;
+  transform: scaleX(1); transform-origin: left center;
+  pointer-events: none;
+}
+/* Strikes draw left-to-right in sequence once the grid is revealed. */
+html.js .pain-grid.reveal .pain-text::after { transform: scaleX(0); }
+html.js .pain-grid.reveal.in .pain-text::after {
+  transform: scaleX(1);
+  transition: transform .45s var(--ease);
+  transition-delay: calc(.85s + var(--strike, 0s));
+}
+.pain-grid li:nth-child(1) .pain-text::after { --strike: 0s; }
+.pain-grid li:nth-child(2) .pain-text::after { --strike: .14s; }
+.pain-grid li:nth-child(3) .pain-text::after { --strike: .28s; }
+.pain-grid li:nth-child(4) .pain-text::after { --strike: .42s; }
+.pain-grid li:nth-child(5) .pain-text::after { --strike: .56s; }
+.pain-grid li:nth-child(6) .pain-text::after { --strike: .70s; }
+.pain-grid li:nth-child(7) .pain-text::after { --strike: .84s; }
 .section-closer {
   font-size: clamp(17px, 1.4vw, 20px);
   color: var(--ink);
@@ -724,12 +752,20 @@ img, svg { display: block; max-width: 100%; }
 .apply-after a { text-decoration: underline; }
 
 /* ── Capability cards ─────────────────────────────────────────────── */
+/* Explicit column counts so 6 cards always tile cleanly (3×2 / 2×3 / 1-col)
+   — auto-fit left orphan cells showing through as blank tiles. */
 .cards {
   display: grid; gap: 1px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   background: var(--line);
   border: 1px solid var(--line);
   border-radius: var(--radius); overflow: hidden;
+}
+@media (max-width: 980px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .cards { grid-template-columns: 1fr; }
 }
 .card {
   position: relative;
@@ -768,35 +804,41 @@ img, svg { display: block; max-width: 100%; }
 .card p { font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); }
 
 /* ── Pipeline stages (How it works) ───────────────────────────────── */
-/* Animated workflow timeline: a faint base rail is always present; as each
-   stage scrolls into view (site.js adds .stage-active) an ink segment draws
-   down its left edge and the stage number fills in. Without JS the base
-   rail + outlined numbers render as a clean static diagram. */
-.stages { display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--line); margin-left: 12px; }
-.stage { position: relative; padding: 28px 0 28px 40px; }
-.stage:not(:last-child) { border-bottom: 1px dashed var(--line); }
-.stage::before {
+/* Scroll-linked workflow timeline: site.js sets --stages-progress (0–1)
+   from the scroll position, so the ink line tracks the reader's actual
+   pace down the page (and rewinds on scroll-up). Stage numbers fill as
+   the reading line passes them. The var defaults to 1, so without JS
+   the rail renders fully inked as a static diagram. */
+.stages {
+  position: relative;
+  display: flex; flex-direction: column; gap: 0;
+  border-left: 1px solid var(--line); margin-left: 12px;
+}
+.stages::before {
   content: '';
-  position: absolute; left: -2px; top: 0; bottom: 0; width: 2px;
+  position: absolute; left: -2px; top: 0; width: 2px; height: 100%;
   background: var(--ink);
-  transform: scaleY(0); transform-origin: top center;
-  transition: transform .7s var(--ease);
+  transform: scaleY(var(--stages-progress, 1));
+  transform-origin: top center;
+  transition: transform .25s linear; /* smooths between scroll frames */
   pointer-events: none;
 }
-.stage.stage-active::before { transform: scaleY(1); }
+.stage { position: relative; padding: 28px 0 28px 40px; }
+.stage:not(:last-child) { border-bottom: 1px dashed var(--line); }
 .stage-num {
   position: absolute; left: -13px; top: 32px;
   width: 26px; height: 26px;
   background: var(--paper); border: 1px solid var(--ink); border-radius: 50%;
   display: grid; place-items: center;
   font-size: 11px; font-weight: 700;
-  transition: background .4s var(--ease) .25s, color .4s var(--ease) .25s;
+  transition: background .35s var(--ease), color .35s var(--ease);
 }
 .stage.stage-active .stage-num { background: var(--ink); color: var(--paper); }
 .stage h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 8px; }
 .stage p  { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; max-width: 620px; }
 @media (prefers-reduced-motion: reduce) {
-  .stage::before, .stage-num { transition: none; }
+  .stages::before { transition: none; transform: scaleY(1); }
+  .stage-num { transition: none; }
 }
 .stage code {
   font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
@@ -827,6 +869,122 @@ img, svg { display: block; max-width: 100%; }
 }
 .bracket-frame::before { left: 16px; border-right: none; }
 .bracket-frame::after  { right: 16px; border-left: none; }
+
+/* ── "You decide" band + animated spec demo ───────────────────────── */
+.decide-band {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(40px, 6vw, 64px) clamp(40px, 5vw, 64px);
+}
+@media (max-width: 880px) {
+  .decide-band { grid-template-columns: 1fr; }
+}
+.decide-copy h2 {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;
+  margin-bottom: 14px;
+}
+.decide-copy > p:not(.section-eyebrow) {
+  font-size: clamp(16px, 1.5vw, 19px);
+  color: var(--ink-soft); line-height: 1.55;
+  max-width: 460px;
+}
+
+/* The demo card: a miniature UFGS excerpt. Default styles are the FINAL
+   state of the sequence (chips resolved, fill-in valued, line struck,
+   badge shown) so it reads correctly without JS / with reduced motion.
+   When the band reveals (.in), each element animates from its "before"
+   state via fill-mode: backwards — same pattern as the hero chips. */
+.spec-demo {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+  font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-size: 13px; line-height: 1.7; color: var(--ink-soft);
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+.sd-head {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-soft);
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.spec-demo .sd-line { display: flex; gap: 12px; padding: 11px 18px 0; margin: 0; max-width: none; }
+.sd-pnum { color: var(--muted); flex-shrink: 0; }
+.sd-del, .sd-add {
+  padding: 0 4px; border-radius: 3px;
+  font-weight: 600; white-space: nowrap;
+  position: relative;
+}
+.sd-del { color: #c0392b; background: rgba(192, 57, 43, 0.07); opacity: 0.7; }
+.sd-del::after {
+  content: '';
+  position: absolute; left: 4px; right: 4px; top: 50%; height: 1.5px;
+  background: currentColor;
+  transform: scaleX(1); transform-origin: left center;
+  pointer-events: none;
+}
+.sd-add { color: #1a7a3e; background: rgba(26, 122, 62, 0.12); }
+.sd-fill { display: inline-grid; vertical-align: baseline; }
+.sd-fill > span { grid-area: 1 / 1; white-space: nowrap; }
+.sd-blank { opacity: 0; color: var(--muted); }
+.sd-value { color: #1a7a3e; font-weight: 600; }
+.sd-removed .sd-text { position: relative; color: var(--muted); }
+.sd-removed .sd-text::after {
+  content: '';
+  position: absolute; left: 0; right: 0; top: 52%; height: 1.5px;
+  background: #c0392b; opacity: 0.7;
+  transform: scaleX(1); transform-origin: left center;
+  pointer-events: none;
+}
+.sd-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 18px 18px 0;
+  padding: 6px 13px;
+  border: 1px solid rgba(26, 122, 62, 0.35);
+  border-radius: 999px;
+  background: rgba(26, 122, 62, 0.08);
+  color: #1a5a2e;
+  font-weight: 600; font-size: 12px;
+}
+.sd-badge svg {
+  width: 13px; height: 13px;
+  stroke: #1a7a3e; stroke-width: 2.2; fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Sequence, triggered when the band reveals. Chip keyframes are shared
+   with the hero (chip-del / chip-add / chip-del-strike). */
+html.js .decide-band.reveal.in .sd-del { animation: chip-del .55s ease-out var(--sd, .5s) backwards; }
+html.js .decide-band.reveal.in .sd-del::after { animation: chip-del-strike .35s ease-out var(--sd, .5s) backwards; }
+html.js .decide-band.reveal.in .sd-add { animation: chip-add .55s ease-out var(--sd, 1.15s) backwards; }
+html.js .decide-band.reveal.in .sd-blank { animation: sd-blank-out .3s ease-out 1.8s backwards; }
+html.js .decide-band.reveal.in .sd-value { animation: sd-value-in .45s ease-out 1.9s backwards; }
+html.js .decide-band.reveal.in .sd-removed .sd-text { animation: sd-removed-text .5s ease-out 2.5s backwards; }
+html.js .decide-band.reveal.in .sd-removed .sd-text::after { animation: chip-del-strike .45s ease-out 2.6s backwards; }
+html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease) 3.2s backwards; }
+
+@keyframes sd-blank-out { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes sd-value-in  { 0% { opacity: 0; transform: translateY(3px); } 100% { opacity: 1; transform: none; } }
+@keyframes sd-removed-text { 0% { color: var(--ink-soft); } 100% { color: var(--muted); } }
+@keyframes sd-badge-in { 0% { opacity: 0; transform: translateY(5px); } 100% { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .decide-band.reveal.in .sd-del,
+  html.js .decide-band.reveal.in .sd-del::after,
+  html.js .decide-band.reveal.in .sd-add,
+  html.js .decide-band.reveal.in .sd-blank,
+  html.js .decide-band.reveal.in .sd-value,
+  html.js .decide-band.reveal.in .sd-removed .sd-text,
+  html.js .decide-band.reveal.in .sd-removed .sd-text::after,
+  html.js .decide-band.reveal.in .sd-badge { animation: none; }
+}
 
 /* ── CTA band ─────────────────────────────────────────────────────── */
 .cta-band {
@@ -942,16 +1100,16 @@ html.js .reveal.in { opacity: 1; transform: translateY(0); }
    children rise in sequence, which reads as composed rather than dumped. */
 html.js .cards.reveal,
 html.js .values.reveal,
-html.js .pain-list.reveal { transform: none; }
+html.js .pain-grid.reveal { transform: none; }
 html.js .cards.reveal > .card,
 html.js .values.reveal > .value,
-html.js .pain-list.reveal > li {
+html.js .pain-grid.reveal > li {
   opacity: 0; transform: translateY(14px);
   transition: opacity .55s var(--ease), transform .55s var(--ease);
 }
 html.js .cards.reveal.in > .card,
 html.js .values.reveal.in > .value,
-html.js .pain-list.reveal.in > li { opacity: 1; transform: translateY(0); }
+html.js .pain-grid.reveal.in > li { opacity: 1; transform: translateY(0); }
 html.js .cards.reveal.in > *:nth-child(2),
 html.js .values.reveal.in > *:nth-child(2) { transition-delay: .08s; }
 html.js .cards.reveal.in > *:nth-child(3),
@@ -962,18 +1120,19 @@ html.js .cards.reveal.in > *:nth-child(5),
 html.js .values.reveal.in > *:nth-child(5) { transition-delay: .32s; }
 html.js .cards.reveal.in > *:nth-child(6),
 html.js .values.reveal.in > *:nth-child(6) { transition-delay: .40s; }
-html.js .pain-list.reveal.in > li:nth-child(2) { transition-delay: .06s; }
-html.js .pain-list.reveal.in > li:nth-child(3) { transition-delay: .12s; }
-html.js .pain-list.reveal.in > li:nth-child(4) { transition-delay: .18s; }
-html.js .pain-list.reveal.in > li:nth-child(5) { transition-delay: .24s; }
-html.js .pain-list.reveal.in > li:nth-child(6) { transition-delay: .30s; }
-html.js .pain-list.reveal.in > li:nth-child(7) { transition-delay: .36s; }
+html.js .pain-grid.reveal.in > li:nth-child(2) { transition-delay: .06s; }
+html.js .pain-grid.reveal.in > li:nth-child(3) { transition-delay: .12s; }
+html.js .pain-grid.reveal.in > li:nth-child(4) { transition-delay: .18s; }
+html.js .pain-grid.reveal.in > li:nth-child(5) { transition-delay: .24s; }
+html.js .pain-grid.reveal.in > li:nth-child(6) { transition-delay: .30s; }
+html.js .pain-grid.reveal.in > li:nth-child(7) { transition-delay: .36s; }
 
 @media (prefers-reduced-motion: reduce) {
   html.js .reveal,
   html.js .cards.reveal > .card,
   html.js .values.reveal > .value,
-  html.js .pain-list.reveal > li { opacity: 1; transform: none; transition: none; }
+  html.js .pain-grid.reveal > li { opacity: 1; transform: none; transition: none; }
+  html.js .pain-grid.reveal .pain-text::after { transform: scaleX(1); transition: none; }
   .hero-eyebrow .dot { animation: none; }
   html { scroll-behavior: auto; }
 }

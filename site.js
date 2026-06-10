@@ -141,19 +141,38 @@ if (revealEls.length && 'IntersectionObserver' in window) {
 }
 
 // ── Workflow timeline (how-it-works) ────────────────────────────
-// As each .stage scrolls into view, .stage-active draws its ink line
-// segment and fills the stage number (see styles.css). One-shot per
-// stage, same pattern as the reveal observer above.
-const stageEls = document.querySelectorAll('.stage');
-if (stageEls.length && 'IntersectionObserver' in window) {
-  const so = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('stage-active'); so.unobserve(e.target); }
+// Scroll-linked: --stages-progress (0–1) tracks how far the reading
+// line (~62% down the viewport) has advanced through the .stages
+// block, so the ink line matches the reader's actual scroll pace and
+// rewinds on scroll-up. Stage numbers fill as the line passes them.
+const stagesWrap = document.querySelector('.stages');
+if (stagesWrap) {
+  const stageEls = Array.from(stagesWrap.querySelectorAll('.stage'));
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let ticking = false;
+
+  const update = () => {
+    ticking = false;
+    if (reduced.matches) {
+      stagesWrap.style.setProperty('--stages-progress', '1');
+      stageEls.forEach(el => el.classList.add('stage-active'));
+      return;
+    }
+    const rect = stagesWrap.getBoundingClientRect();
+    const readLine = window.innerHeight * 0.62;
+    const progress = Math.min(1, Math.max(0, (readLine - rect.top) / rect.height));
+    stagesWrap.style.setProperty('--stages-progress', progress.toFixed(4));
+    stageEls.forEach(el => {
+      el.classList.toggle('stage-active', el.getBoundingClientRect().top + 24 <= readLine);
     });
-  }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
-  stageEls.forEach(el => so.observe(el));
-} else {
-  stageEls.forEach(el => el.classList.add('stage-active'));
+  };
+  const requestUpdate = () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  };
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate, { passive: true });
+  update();
 }
 
 // ── Cookie consent + Google Analytics ───────────────────────────
