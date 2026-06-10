@@ -732,6 +732,17 @@ img, svg { display: block; max-width: 100%; }
   background: #f1f1f1; border-radius: 4px;
 }
 
+/* Cross-cutting callout below the stages (Ask the Library) */
+.stage-aside {
+  margin: 40px 0 0 12px;
+  padding: 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-soft);
+}
+.stage-aside h3 { font-size: 17px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 8px; }
+.stage-aside p  { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; max-width: 720px; }
+
 /* ── Bracket-themed visual block ──────────────────────────────────── */
 .bracket-frame {
   border: 1px solid var(--line); border-radius: var(--radius);

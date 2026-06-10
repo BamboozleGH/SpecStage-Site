@@ -2,23 +2,27 @@
 
 > AI-assisted, engineer-controlled tailoring of UFGS (Unified Facilities Guide Specifications) for federal construction projects. Currently in private beta.
 
-SpecStage is a Windows desktop application that streamlines the tailoring of UFGS specifications for MILCON and other federal construction work. Engineers upload their project documents into a single workspace; SpecStage recommends the relevant UFGS specification sections, tailors them against the project context, and presents the result for engineer review. Approved output exports as SpecsIntact-compatible files or PDF.
+SpecStage is a Windows desktop application that streamlines the tailoring of UFGS specifications for MILCON and other federal construction work. Engineers set up a project against a pinned UFGS master library version, upload their project documents into a single workspace, and SpecStage recommends the relevant UFGS sections and tailors them against the project context. Every AI decision is presented for engineer review inside a SpecsIntact-style spec view — accept, override, or defer, with engineer decisions flowing directly into the deliverable. A requirement coverage audit checks the tailored sections against the requirements stated in the project documents and flags likely gaps with evidence in a Coverage Register. Approved output exports through a full export suite.
 
 The product is in private beta as of 2026. Beta access requests: hello@specstage.com.
 
 ## Pages
 
 - [Home](https://www.specstage.com/): Product overview, capability summary, request access.
-- [How it works](https://www.specstage.com/how-it-works): The end-to-end engineer workflow from document upload through review and export.
+- [How it works](https://www.specstage.com/how-it-works): The end-to-end engineer workflow — pinned UFGS master library, document upload, section recommendation, tailoring, in-spec review and approval, requirement coverage audit, export.
 - [About](https://www.specstage.com/about): Mission, principles, "by engineers, for engineers" framing.
-- [Request access](https://www.specstage.com/request-access): Apply for the private beta. Four short questions about UFGS work, tailoring frequency, SpecsIntact use, and a section to test.
+- [Request access](https://www.specstage.com/request-access): Apply for the private beta. A short application about your UFGS work, organization, and SpecsIntact use.
 
 ## Key facts
 
 - **Audience**: Federal construction engineers, A/E firms working on USACE, NAVFAC, AFCEC, and other DoD projects.
-- **Compatibility**: Exports as SpecsIntact-compatible files for direct integration into existing SpecsIntact workflows, or as PDF for distribution and archival.
+- **Workflow**: Pinned UFGS master library → project documents → AI section recommendation → project-aware tailoring (brackets, fill-ins, non-applicable paragraphs, table rows, host-nation standards) → engineer review in a SpecsIntact-style spec view → section approval → requirement coverage audit → export.
+- **Review model**: Every AI decision is anchored to the spec text it affects, with rationale and confidence. Engineers accept, override, or defer each decision inline; overrides flow into the exported file and survive re-runs. Section approval is gated on the output being current with every review decision.
+- **Coverage audit**: Requirements are extracted from project documents with source quotes and checked against the tailored sections. Findings (covered / partially covered / likely gap) land in a Coverage Register with evidence; engineers disposition each finding; AI-drafted language for confirmed gaps is placed in the spec as a clearly-marked draft for engineer review. The register exports to Excel.
+- **Ask the Library**: Natural-language questions over the installed UFGS master library, answered with citations to the exact sections — library-wide or scoped to the section being read.
+- **Exports**: SpecsIntact-compatible specification files, per-section and combined project PDFs (cover page + table of contents), Submittal Register in Excel and PDF, decision audit log (Excel), and a portable project bundle for handoff between SpecStage users.
 - **Approach**: AI-assisted, engineer-controlled. Recommendations are presented for review at every stage; engineers retain final approval authority on all output.
-- **Traceability**: Every tailoring decision is recorded with its rationale and the project context it was based on.
+- **Traceability**: Every tailoring decision is recorded with its rationale, project context, and the engineer's review action.
 - **Trademark notice**: SpecsIntact is a registered trademark of NASA. SpecStage is not affiliated with NASA.
 
 ## Contact

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0a0a0a">
 
   <title>How SpecStage works | UFGS tailoring workflow</title>
-  <meta name="description" content="From project documents to project-ready specifications. SpecStage recommends UFGS sections, tailors them to your project context, presents them for engineer review, and exports as SpecsIntact-compatible files or PDF.">
+  <meta name="description" content="From project documents to project-ready specifications. SpecStage recommends UFGS sections, tailors them to your project context, presents every decision for in-spec engineer review, audits requirement coverage, and exports SpecsIntact-compatible files, PDF, and a Submittal Register.">
   <link rel="canonical" href="https://www.specstage.com/how-it-works">
 
   <meta property="og:type" content="article">
@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="/styles.css?v=62">
+  <link rel="stylesheet" href="/styles.css?v=63">
 
   <!-- Structured data: Organization (shared across all pages via @id) -->
   <script type="application/ld+json">
@@ -92,34 +92,51 @@
 
           <div class="stage">
             <span class="stage-num">1</span>
-            <h3>Upload project documents</h3>
-            <p>Drop your RFP, design criteria, drawings, and supporting documentation into a single project workspace. SpecStage accepts PDF, image, and text formats and uses these inputs as the foundation for every downstream decision.</p>
+            <h3>Start from a pinned UFGS master library</h3>
+            <p>Install official UFGS master file releases directly in SpecStage — from a folder or zip — and browse them in a read-only master viewer. Every project is pinned to the library version it was created against, so a new UFGS release never silently changes a project in progress.</p>
           </div>
 
           <div class="stage">
             <span class="stage-num">2</span>
+            <h3>Upload project documents</h3>
+            <p>Drop your RFP, design criteria, drawings, and supporting documentation into a single project workspace. SpecStage accepts PDF, Word, Excel, image, and text formats and uses these inputs as the foundation for every downstream decision.</p>
+          </div>
+
+          <div class="stage">
+            <span class="stage-num">3</span>
             <h3>AI-assisted section recommendation</h3>
             <p>SpecStage reviews the uploaded documents and recommends the UFGS specification sections relevant to your project scope. Every recommendation is shown for engineer confirmation; sections can be added or removed before any tailoring begins. No section is processed without explicit approval.</p>
           </div>
 
           <div class="stage">
-            <span class="stage-num">3</span>
+            <span class="stage-num">4</span>
             <h3>Project-aware tailoring</h3>
             <p>Each selected section is tailored against the project's full context — branch, location, scope, mission criticality, host-nation considerations, and any additional options the engineer has configured. Tailoring resolves bracketed options, fill-in values, non-applicable paragraphs, table-row applicability, references, and submittal requirements as part of this step.</p>
           </div>
 
           <div class="stage">
-            <span class="stage-num">4</span>
-            <h3>Engineer review</h3>
-            <p>Tailored sections are presented for review alongside the rationale behind each decision and a confidence score. Engineers can accept any decision, edit it, request a revision, or remove it before approving the output for delivery.</p>
+            <span class="stage-num">5</span>
+            <h3>Review and approve — in the spec</h3>
+            <p>Tailored sections render in a SpecsIntact-style view with revision marks, and every AI decision is anchored to the exact text it affects, with its rationale and confidence. Engineers accept, override, or defer each decision inline; overrides flow straight into the deliverable, and they survive re-runs. When a section is right, the engineer approves it — approval is gated on the output being current with every review decision.</p>
           </div>
 
           <div class="stage">
-            <span class="stage-num">5</span>
-            <h3>Export</h3>
-            <p>Approved sections export as SpecsIntact-compatible specification files for direct integration into your existing workflow, or as PDF for distribution and archival. A complete decision log exports alongside, giving a full audit trail of every tailoring choice made.</p>
+            <span class="stage-num">6</span>
+            <h3>Audit requirement coverage</h3>
+            <p>SpecStage extracts the requirements stated in your project documents — each with its source quote — and checks whether the tailored sections actually address them. Findings land in a Coverage Register with evidence: covered, partially covered, or likely gap. Engineers disposition each finding, and for confirmed gaps SpecStage drafts candidate language and places it in the spec as a clearly-marked draft for engineer review. The register exports to Excel.</p>
           </div>
 
+          <div class="stage">
+            <span class="stage-num">7</span>
+            <h3>Export</h3>
+            <p>Approved sections export as SpecsIntact-compatible specification files for direct integration into your existing workflow. The full export suite also produces per-section PDFs, a combined project PDF with cover page and table of contents, a Submittal Register in Excel and PDF, a complete decision audit log, and a portable project bundle another SpecStage user can import and continue working on.</p>
+          </div>
+
+        </div>
+
+        <div class="stage-aside reveal">
+          <h3>Throughout: Ask the Library</h3>
+          <p>At any point in the workflow, engineers can ask natural-language questions of the installed UFGS master library — "which sections govern fall protection?", "where do exposed fasteners belong?" — and get answers with citations to the exact sections they came from, scoped to the whole library or the section being read.</p>
         </div>
       </div>
     </section>
@@ -186,6 +203,6 @@
     </div>
   </div>
 
-  <script src="/site.js?v=62" defer></script>
+  <script src="/site.js?v=63" defer></script>
 </body>
 </html>

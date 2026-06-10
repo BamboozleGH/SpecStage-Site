@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0a0a0a">
 
   <title>SpecStage | AI-Powered UFGS Specification Tailoring</title>
-  <meta name="description" content="Tailor UFGS master specifications for federal construction projects in hours, not weeks. AI-assisted, engineer-controlled, with SpecsIntact and PDF export. In private beta — request access.">
+  <meta name="description" content="Tailor UFGS master specifications for federal construction projects in hours, not weeks. AI-assisted, engineer-controlled — with in-spec review, requirement coverage auditing, and SpecsIntact, PDF, and Submittal Register export. In private beta — request access.">
   <link rel="canonical" href="https://www.specstage.com/">
 
   <!-- Open Graph -->
@@ -35,7 +35,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="/styles.css?v=62">
+  <link rel="stylesheet" href="/styles.css?v=63">
 
   <!-- Structured data: SoftwareApplication -->
   <script type="application/ld+json">
@@ -46,7 +46,7 @@
     "applicationCategory": "BusinessApplication",
     "applicationSubCategory": "Construction Specification Software",
     "operatingSystem": "Windows 10, Windows 11",
-    "description": "AI-assisted, engineer-controlled tailoring of UFGS (Unified Facilities Guide Specifications) master sections for federal construction projects. Exports SpecsIntact-compatible files and PDF.",
+    "description": "AI-assisted, engineer-controlled tailoring of UFGS (Unified Facilities Guide Specifications) master sections for federal construction projects. Engineers review every AI decision in a SpecsIntact-style spec view, audit project requirements for coverage gaps, and export SpecsIntact-compatible files, PDF, and a Submittal Register.",
     "url": "https://www.specstage.com/",
     "image": "https://www.specstage.com/og-image.png",
     "publisher": { "@id": "https://www.specstage.com/#organization" },
@@ -119,7 +119,7 @@
         <div class="hero-meta">
           <span><strong>690+</strong> UFGS master sections supported</span>
           <span><strong>AI-assisted,</strong> engineer-controlled</span>
-          <span><strong>No backend.</strong> Files stay on your machine.</span>
+          <span><strong>Desktop app.</strong> Project files stay on your machine.</span>
         </div>
       </div>
     </section>
@@ -136,6 +136,7 @@
           <li>Remove non-applicable requirements</li>
           <li>Resolve brackets and fill-ins</li>
           <li>Reconcile references and submittals</li>
+          <li>Verify the spec actually covers every project requirement</li>
           <li>Preserve SpecsIntact compatibility</li>
           <li>Document why each decision was made</li>
         </ul>
@@ -149,8 +150,8 @@
       <div class="wrap">
         <p class="section-eyebrow reveal">What it does</p>
         <h2 class="section-h reveal">A streamlined workflow from documents to delivery.</h2>
-        <p class="section-lead reveal" style="max-width:780px;margin-bottom:14px">Engineers upload their project documents into a single workspace.</p>
-        <p class="section-lead reveal" style="max-width:780px">SpecStage recommends the relevant UFGS sections, tailors them against the project context, and presents the result for review before any export.</p>
+        <p class="section-lead reveal" style="max-width:780px;margin-bottom:14px">Engineers set up a project against a pinned UFGS master library and upload their project documents into a single workspace.</p>
+        <p class="section-lead reveal" style="max-width:780px">SpecStage recommends the relevant sections, tailors them against the project context, and presents every decision for engineer review — in the spec itself — before anything is exported.</p>
 
         <div class="cards reveal">
           <div class="card">
@@ -171,7 +172,40 @@
               </svg>
             </div>
             <h3>Project-aware tailoring</h3>
-            <p>Each section is tailored against your project's branch, location, scope, and configurable options. Engineers retain full control over every decision before approval.</p>
+            <p>Each section is tailored against your project's branch, location, and scope — resolving brackets, fill-ins, non-applicable paragraphs, table rows, and host-nation standards for OCONUS work — with the rationale recorded for every decision.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 7C9 7 4.5 13 3 16c1.5 3 6 9 13 9s11.5-6 13-9c-1.5-3-6-9-13-9Z"/>
+                <circle cx="16" cy="16" r="4"/>
+              </svg>
+            </div>
+            <h3>Review in the spec, not a spreadsheet</h3>
+            <p>Tailored sections render in a SpecsIntact-style view with revision marks. Every AI decision is anchored to the text it affects — accept, override, or defer it inline, then approve the section. Engineer decisions flow straight into the deliverable.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 3l11 5v8c0 7-4.5 11-11 13C9.5 27 5 23 5 16V8l11-5Z"/>
+                <path d="M11 16l3.5 3.5L21 13"/>
+              </svg>
+            </div>
+            <h3>Requirement coverage audit</h3>
+            <p>SpecStage extracts requirements from your project documents — with source quotes — and checks each one against the tailored sections. Likely gaps are flagged with evidence in a Coverage Register, and AI-drafted language for confirmed gaps is placed in the spec for engineer review.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M27 14a10 10 0 0 1-10 10H9l-4 4V14a10 10 0 0 1 10-10h2a10 10 0 0 1 10 10Z"/>
+                <path d="M11 12h10M11 17h6"/>
+              </svg>
+            </div>
+            <h3>Ask the Library</h3>
+            <p>Ask natural-language questions of the installed UFGS master library and get answers with citations to the exact sections they came from — across the whole library or scoped to the section you're reading.</p>
           </div>
 
           <div class="card">
@@ -181,8 +215,8 @@
                 <path d="M10 12H22M10 16H22M10 20H18"/>
               </svg>
             </div>
-            <h3>Compatible export</h3>
-            <p>Approved specifications export as SpecsIntact-compatible files for direct integration into your existing workflow, or as PDF for distribution and archival.</p>
+            <h3>A complete export suite</h3>
+            <p>SpecsIntact-compatible specification files, per-section and combined project PDFs with cover page and table of contents, a Submittal Register in Excel and PDF, a full decision audit log, and a portable project bundle for handoff between SpecStage users.</p>
           </div>
         </div>
       </div>
@@ -277,6 +311,6 @@
     </div>
   </div>
 
-  <script src="/site.js?v=62" defer></script>
+  <script src="/site.js?v=63" defer></script>
 </body>
 </html>
