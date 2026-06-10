@@ -409,7 +409,9 @@ img, svg { display: block; max-width: 100%; }
 }
 
 /* ── "Why this matters" pain grid ─────────────────────────────────── */
-/* Compact two-column grid of spec-numbered tasks. */
+/* Compact two-column grid of spec-numbered tasks. Column-major flow so
+   numbering reads down the left column (1.1–1.4) then down the right
+   (1.5–1.7), like a spec page — not zigzagging across rows. */
 .pain-grid {
   list-style: none;
   padding: 0;
@@ -417,10 +419,16 @@ img, svg { display: block; max-width: 100%; }
   max-width: 980px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
   gap: 0 56px;
 }
 @media (max-width: 720px) {
-  .pain-grid { grid-template-columns: 1fr; }
+  .pain-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-flow: row;
+  }
 }
 .pain-grid li {
   display: flex; gap: 14px; align-items: baseline;
