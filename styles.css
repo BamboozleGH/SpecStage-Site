@@ -789,7 +789,8 @@ img, svg { display: block; max-width: 100%; }
   background: var(--paper-soft);
   padding: 14px 16px;
   margin-bottom: 22px;
-  min-height: 106px;
+  height: 132px; /* fixed, not min — equal viz boxes keep the h3 headers
+                    horizontally aligned across the row */
   font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
   font-size: 11.5px; line-height: 1.7; color: var(--ink-soft);
   display: flex; flex-direction: column; justify-content: center; gap: 7px;
