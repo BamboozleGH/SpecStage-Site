@@ -253,6 +253,11 @@ img, svg { display: block; max-width: 100%; }
   -webkit-text-fill-color: transparent;
                    color: transparent;
   display: inline-block;
+  /* The clipped background only paints inside the span's line box; with
+     the h1's tight line-height the "y" descender fell outside it and
+     rendered transparent. Extend the box down, compensate the layout. */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 /* Hero "spec-tailoring" bullet points — playful brackets with ADD/DEL chips
