@@ -13,6 +13,7 @@ app.commandLine.appendSwitch('force-device-scale-factor', '2');
 const jobs = [
   { file: 'view-spec-mock.html',      out: 'view-spec.png',      w: 1456, h: 900 },
   { file: 'coverage-audit-mock.html', out: 'coverage-audit.png', w: 982 },
+  { file: 'og-image-mock.html',       out: 'og-image.png',       w: 600,  h: 315 }, // 2x => 1200x630
 ];
 
 app.whenReady().then(async () => {

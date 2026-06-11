@@ -975,6 +975,40 @@ html.js .stage.stage-active .stage-chips li { opacity: 1; transform: none; }
 .stage-aside h3 { font-size: 17px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 8px; }
 .stage-aside p  { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; max-width: 720px; }
 
+/* ── FAQ (how-it-works) ───────────────────────────────────────────── */
+.faq { max-width: 880px; border-top: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 40px 18px 2px;
+  font-size: clamp(15.5px, 1.3vw, 18px); font-weight: 700;
+  color: var(--ink); letter-spacing: -0.01em;
+  position: relative;
+  transition: color .15s var(--ease);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  position: absolute; right: 8px; top: 50%;
+  transform: translateY(-50%);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 19px; font-weight: 400; color: var(--muted);
+  transition: transform .25s var(--ease);
+}
+.faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq-item summary:hover { color: var(--ink-soft); }
+.faq-item summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
+.faq-item p {
+  padding: 0 40px 20px 2px;
+  font-size: 15px; color: var(--ink-soft); line-height: 1.65;
+  max-width: 760px;
+}
+.faq-item a { text-decoration: underline; }
+@media (prefers-reduced-motion: reduce) {
+  .faq-item summary::after { transition: none; }
+}
+
 /* ── Bracket-themed visual block ──────────────────────────────────── */
 .bracket-frame {
   border: 1px solid var(--line); border-radius: var(--radius);
@@ -1050,6 +1084,28 @@ html.js .stage.stage-active .stage-chips li { opacity: 1; transform: none; }
   pointer-events: none;
 }
 .sd-add { color: #1a7a3e; background: rgba(26, 122, 62, 0.12); }
+
+/* Interactive options inside the demo: each bracketed alternative is a
+   real control. Brackets are markup (<i>) so the chosen option can drop
+   them — matching how SpecsIntact resolves a bracket. */
+.sd-group { white-space: normal; }
+.sd-opt { cursor: pointer; margin: 0 1px; }
+.sd-opt i { font-style: normal; }
+.sd-opt.sd-add i { display: none; }
+.sd-opt:hover { box-shadow: inset 0 0 0 1.5px currentColor; }
+.sd-opt:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+/* Once the visitor interacts, entrance animations must not re-fire on
+   class swaps; state changes use transitions instead. */
+.spec-demo.demo-live .sd-opt,
+.spec-demo.demo-live .sd-opt::after { animation: none !important; }
+.spec-demo.demo-live .sd-opt {
+  transition: color .25s var(--ease), background-color .25s var(--ease), opacity .25s var(--ease);
+}
+.sd-hint {
+  font-family: 'Zen Kaku Gothic New', -apple-system, 'Segoe UI', system-ui, sans-serif;
+  font-size: 12.5px; color: var(--muted);
+  padding: 14px 18px 0; margin: 0;
+}
 /* Deleted article: number AND title are struck — matching how a removed
    bracket-alternative article reads in SpecsIntact. */
 .sd-removed .sd-text,

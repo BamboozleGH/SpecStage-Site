@@ -35,7 +35,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
 
-  <link rel="stylesheet" href="/styles.css?v=75">
+  <link rel="stylesheet" href="/styles.css?v=76">
 
   <!-- Structured data: SoftwareApplication -->
   <script type="application/ld+json">
@@ -105,7 +105,7 @@
           <p class="hero-point">Built <span class="endorse">by engineers, for spec professionals</span>.</p>
           <p class="hero-point">
             Created from
-            <ins class="opt-add" style="--delay:.7s">project documents</ins><ins class="opt-add" style="--delay:.85s">design criteria</ins><ins class="opt-add" style="--delay:1.0s">RFPs</ins><del class="opt-del" style="--delay:.4s">[guesswork]</del><del class="opt-del" style="--delay:.55s">[copy-paste]</del>,
+            <ins class="opt-add" style="--delay:.7s">project documents</ins>, <ins class="opt-add" style="--delay:.85s">design criteria</ins>, and <ins class="opt-add" style="--delay:1.0s">RFPs</ins> <del class="opt-del" style="--delay:.4s">[guesswork]</del><del class="opt-del" style="--delay:.55s">[copy-paste]</del>,
             approved by
             <ins class="opt-add" style="--delay:1.75s">the engineer</ins><del class="opt-del" style="--delay:1.2s">[_______]</del>.
           </p>
@@ -164,8 +164,7 @@
       <div class="wrap">
         <p class="section-eyebrow reveal">What it does</p>
         <h2 class="section-h reveal">A streamlined workflow from documents to delivery.</h2>
-        <p class="section-lead reveal" style="max-width:780px;margin-bottom:14px">Engineers set up a project against a pinned UFGS master library and upload their project documents into a single workspace.</p>
-        <p class="section-lead reveal" style="max-width:780px">SpecStage recommends the relevant sections, tailors them against the project context, and presents every decision for engineer review — in the spec itself — before anything is exported.</p>
+        <p class="section-lead reveal" style="max-width:780px">Set up a project against a pinned UFGS master library, drop in your project documents, and SpecStage takes it from there — then everything below is reviewed, in the spec, by you.</p>
 
         <div class="cards reveal">
           <div class="card">
@@ -185,34 +184,6 @@
             </div>
             <h3>Project-aware tailoring</h3>
             <p>Brackets, fill-ins, paragraphs, table rows, host-nation standards — resolved against your project.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-viz" aria-hidden="true">
-              <p class="viz-line">2.4.1 Finish exposed panels with <span class="viz-anchor">manufacturer's standard color</span>…</p>
-              <div class="viz-actions"><span class="viz-pill viz-pill-on">Accept</span><span class="viz-pill">Override</span><span class="viz-pill">Defer</span></div>
-            </div>
-            <h3>Review in the spec, not a spreadsheet</h3>
-            <p>Accept, override, or defer each AI decision right in the spec — your call lands in the deliverable.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-viz" aria-hidden="true">
-              <div class="viz-row"><span class="viz-status viz-ok">COVERED</span><span>Seismic anchorage criteria</span></div>
-              <div class="viz-row"><span class="viz-status viz-part">PARTIAL</span><span>Roof live-load criteria</span></div>
-              <div class="viz-row"><span class="viz-status viz-gap">LIKELY GAP</span><span>ISO container framing</span></div>
-            </div>
-            <h3>Requirement coverage audit</h3>
-            <p>Every extracted requirement is checked against the spec — gaps surface with evidence and drafted fixes.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-viz" aria-hidden="true">
-              <p class="viz-line viz-q">"Which sections govern fall protection?"</p>
-              <p class="viz-line">Governed by <span class="viz-cite">01 35 26</span> Governmental Safety Requirements…</p>
-            </div>
-            <h3>Ask the Library</h3>
-            <p>Plain-language questions over the UFGS masters, answered with exact section citations.</p>
           </div>
 
           <div class="card">
@@ -255,12 +226,11 @@
             <h2>SpecStage proposes.<br>You decide.</h2>
             <p>Every output is reviewable, traceable, and aligned to your project's requirements.</p>
           </div>
-          <!-- Decorative animated spec excerpt — bracket options resolve,
-               a fill-in gets its value, a non-applicable line is struck,
-               and the section is marked reviewed. Pure CSS; plays once on
-               reveal; final state is the default so it reads correctly
-               without JS or with reduced motion. -->
-          <div class="spec-demo" aria-hidden="true">
+          <!-- Interactive spec excerpt — the AI's bracket choices play in
+               on reveal, then every bracketed option is clickable so the
+               visitor can override the call themselves (site.js). Final
+               state is the default so it reads correctly without JS. -->
+          <div class="spec-demo">
             <div class="sd-head">
               <span>SECTION 07 41 13</span>
               <span>METAL ROOF PANELS</span>
@@ -276,16 +246,17 @@
             <p class="sd-line">
               <span class="sd-pnum"></span>
               <span class="sd-text">Roll-form steel sheet roof panels to the specified profile,
-                <span class="sd-del" style="--sd:.5s">[26]</span><span class="sd-del" style="--sd:.65s">[24]</span><span class="sd-add" style="--sd:1.35s">22</span><span class="sd-del" style="--sd:.8s">[20]</span><span class="sd-del" style="--sd:.95s">[18]</span> gauge.</span>
+                <span class="sd-group"><span class="sd-opt sd-del" style="--sd:.5s"><i>[</i>26<i>]</i></span><span class="sd-opt sd-del" style="--sd:.65s"><i>[</i>24<i>]</i></span><span class="sd-opt sd-add" data-ai style="--sd:1.35s"><i>[</i>22<i>]</i></span><span class="sd-opt sd-del" style="--sd:.8s"><i>[</i>20<i>]</i></span><span class="sd-opt sd-del" style="--sd:.95s"><i>[</i>18<i>]</i></span></span> gauge.</span>
             </p>
             <p class="sd-line">
               <span class="sd-pnum"></span>
-              <span class="sd-text"><span class="sd-del" style="--sd:1.7s">[Galvanized]</span> <span class="sd-add" style="--sd:2.1s">Aluminum-Zinc alloy coated</span> steel sheet conforming to ASTM A792/A792M.</span>
+              <span class="sd-text"><span class="sd-group"><span class="sd-opt sd-del" style="--sd:1.7s"><i>[</i>Galvanized<i>]</i></span> <span class="sd-opt sd-add" data-ai style="--sd:2.1s"><i>[</i>Aluminum-Zinc alloy coated<i>]</i></span></span> steel sheet conforming to ASTM A792/A792M.</span>
             </p>
             <div class="sd-badge">
-              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5 6.5 12 13 4.5"/></svg>
-              Reviewed — ready for export
+              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5"/></svg>
+              <span class="sd-badge-text">Reviewed — ready for export</span>
             </div>
+            <p class="sd-hint">Try it — click a bracketed option to make the call yourself.</p>
           </div>
         </div>
       </div>
@@ -441,6 +412,6 @@
     </div>
   </div>
 
-  <script src="/site.js?v=75" defer></script>
+  <script src="/site.js?v=76" defer></script>
 </body>
 </html>

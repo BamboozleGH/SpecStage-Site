@@ -175,6 +175,54 @@ if (stagesWrap) {
   update();
 }
 
+// ── Interactive spec demo (home) ────────────────────────────────
+// Every bracketed option in the demo is a control: clicking one makes
+// it the chosen (green, unbracketed) value and strikes the rest, like
+// resolving a bracket in SpecsIntact. The badge flips to note a
+// reviewer override when the visitor's pick differs from the AI's.
+(() => {
+  const demo = document.querySelector('.spec-demo');
+  if (!demo) return;
+  const badgeText = demo.querySelector('.sd-badge-text');
+  const defaultBadge = badgeText ? badgeText.textContent : '';
+  const groups = Array.from(demo.querySelectorAll('.sd-group'));
+  if (!groups.length) return;
+
+  const matchesAi = () => groups.every(g => {
+    const chosen = g.querySelector('.sd-opt.sd-add');
+    return chosen && chosen.hasAttribute('data-ai');
+  });
+
+  groups.forEach(group => {
+    const opts = Array.from(group.querySelectorAll('.sd-opt'));
+    opts.forEach(opt => {
+      opt.setAttribute('role', 'button');
+      opt.tabIndex = 0;
+      opt.setAttribute('aria-pressed', String(opt.classList.contains('sd-add')));
+
+      const choose = () => {
+        demo.classList.add('demo-live'); // before the swap, so entrance animations can't re-fire
+        opts.forEach(o => {
+          const on = o === opt;
+          o.classList.toggle('sd-add', on);
+          o.classList.toggle('sd-del', !on);
+          o.setAttribute('aria-pressed', String(on));
+        });
+        if (badgeText) {
+          badgeText.textContent = matchesAi()
+            ? defaultBadge
+            : 'Reviewed — reviewer override recorded';
+        }
+      };
+
+      opt.addEventListener('click', choose);
+      opt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); }
+      });
+    });
+  });
+})();
+
 // ── Cookie consent + Google Analytics ───────────────────────────
 const CONSENT_KEY = 'specstage-analytics-consent';
 const banner = document.getElementById('cookie-banner');
