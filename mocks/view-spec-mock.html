@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px; color: #1b1b1b; background: #ffffff;
+    width: 1456px; height: 900px; overflow: hidden;
+  }
+  .titlebar {
+    padding: 16px 22px 12px;
+    font-size: 19px; font-weight: 700; letter-spacing: -0.01em;
+  }
+  .toolbar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 22px 14px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .toolbar .lbl { font-size: 12.5px; font-weight: 600; color: #444; margin-right: 4px; }
+  .tg {
+    padding: 5px 13px; border-radius: 6px; font-size: 12.5px; font-weight: 600;
+    border: 1px solid #d6d6d6; background: #fff; color: #444;
+  }
+  .tg.on { background: #1763c4; border-color: #1763c4; color: #fff; }
+  .zoom {
+    margin-left: auto; display: flex; align-items: center;
+    border: 1px solid #d6d6d6; border-radius: 6px; overflow: hidden;
+    font-size: 12.5px; font-weight: 600; color: #444;
+  }
+  .zoom span { padding: 5px 12px; }
+  .zoom .z { border-left: 1px solid #e3e3e3; border-right: 1px solid #e3e3e3; }
+
+  .cols { display: flex; height: 814px; }
+  .spec {
+    flex: 1 1 56%;
+    padding: 22px 30px;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 13px; line-height: 1.62; color: #111;
+    overflow: hidden;
+  }
+  .spec .prt { font-weight: 700; margin: 14px 0 12px; }
+  .spec .spt { font-weight: 700; margin: 14px 0 8px; }
+  .spec p { margin: 0 0 12px; max-width: 640px; }
+  .ref { color: #b5179e; }
+  .added { color: #1e7a35; }
+  .del { color: #c0392b; text-decoration: line-through; }
+  .anchor {
+    outline: 2px solid #1763c4; outline-offset: 1px;
+    background: #eaf2fd;
+  }
+
+  .panel {
+    flex: 1 1 44%;
+    border-left: 1px solid #e6e6e6;
+    padding: 16px 18px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .panel h2 { font-size: 14.5px; font-weight: 700; margin-bottom: 12px; }
+  .fchips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+  .fchip {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    border: 1px solid #d6d6d6; background: #fff; color: #444;
+  }
+  .fchip .n {
+    font-size: 10.5px; font-weight: 700;
+    background: #eceef0; border-radius: 999px; padding: 1px 7px; color: #555;
+  }
+  .fchip.on { background: #1763c4; border-color: #1763c4; color: #fff; }
+  .fchip.on .n { background: #ffffff; color: #1763c4; }
+  .autorow { margin-bottom: 12px; }
+  .actbar { display: flex; gap: 10px; margin-bottom: 12px; }
+  .actbtn {
+    flex: 1; text-align: center;
+    padding: 8px 0; border: 1px solid #d6d6d6; border-radius: 7px;
+    font-size: 12.5px; font-weight: 600; color: #333; background: #fff;
+  }
+  .actbtn .n { font-size: 10.5px; font-weight: 700; background: #eceef0; border-radius: 999px; padding: 1px 7px; color: #555; margin-left: 6px; }
+  .actbtn.dis { color: #aaa; }
+  .sortrow { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 11.5px; font-weight: 700; color: #777; letter-spacing: .04em; }
+  .sortsel {
+    flex: 1; border: 1px solid #d6d6d6; border-radius: 6px;
+    padding: 6px 10px; font-size: 12.5px; font-weight: 500; color: #333;
+    display: flex; justify-content: space-between;
+  }
+  .card { padding: 11px 12px; border-bottom: 1px solid #f0f0f0; border-radius: 8px; }
+  .card.sel { background: #eaf2fd; border: 1px solid #bcd6f5; margin: 2px 0 8px; }
+  .ctag {
+    display: inline-block; font-size: 9.5px; font-weight: 700; letter-spacing: .05em;
+    background: #eef1f4; color: #51606e; border-radius: 4px; padding: 2px 7px; margin-right: 8px;
+    vertical-align: 1px;
+  }
+  .ctitle { font-size: 12.8px; color: #222; }
+  .copt { font-size: 12px; color: #666; margin: 4px 0 0 0; }
+  .cmeta { font-size: 10.5px; color: #999; margin-top: 4px; letter-spacing: .02em; }
+  .cstatus { display: inline-block; margin-top: 5px; font-size: 11px; font-weight: 600; color: #1e6b2d; background: #e9f5ea; padding: 2px 9px; border-radius: 999px; }
+  .cbtns { display: flex; gap: 8px; margin-top: 10px; }
+  .cbtn {
+    padding: 6px 13px; border-radius: 6px; font-size: 12px; font-weight: 600;
+    border: 1px solid #d6d6d6; background: #fff; color: #333;
+  }
+  .cbtn.accept { background: #e9f5ea; border-color: #b5d6b9; color: #1e6b2d; }
+  .cbtn.rerun { background: #fdf6e3; border-color: #e8d49a; color: #8a6410; }
+  .rationale {
+    margin-top: 11px; padding: 10px 13px;
+    background: #f2f7fd; border-left: 3px solid #1763c4; border-radius: 0 7px 7px 0;
+    font-size: 12px; line-height: 1.5; color: #2a3a4d;
+  }
+  .rationale b { font-size: 10px; letter-spacing: .06em; color: #1763c4; display: block; margin-bottom: 3px; }
+</style>
+</head>
+<body>
+  <div class="titlebar">07 41 13 — METAL ROOF PANELS — Spec Preview</div>
+  <div class="toolbar">
+    <span class="lbl">View:</span>
+    <span class="tg on">Revisions</span>
+    <span class="tg on">Colors</span>
+    <span class="tg">Decision markers</span>
+    <span class="tg">Notes</span>
+    <span class="tg">Tags</span>
+    <span class="tg on">Numeric Paragraphs</span>
+    <span class="zoom"><span>−</span><span class="z">100%</span><span>+</span></span>
+  </div>
+  <div class="cols">
+    <div class="spec">
+      <div class="prt">PART 2   PRODUCTS</div>
+      <div class="spt">2.1   SYSTEM DESCRIPTION</div>
+      <p>Provide a non-structural metal roof system installed on the above deck, including panels, attachment devices, fasteners, closures, trim, flashings, and accessories, designed in accordance with <span class="ref">ASCE 7-22</span> and <span class="ref">MBMA RSDM</span>.</p>
+      <div class="spt">2.1.1   Performance Requirements</div>
+      <p>Design the roof panel system for the wind loads indicated, with uplift resistance verified by testing in accordance with <span class="ref">ASTM E1592</span> or <span class="ref">UL 580</span>. Submit complete sealed and signed calculations prepared by the manufacturer's registered professional engineer.</p>
+      <div class="spt">2.4   MATERIALS</div>
+      <div class="spt">2.4.2   Steel Sheet Panels</div>
+      <p>Roll-form steel sheet roof panels to the specified profile, <span class="del">[26]</span> <span class="del">[24]</span> <span class="added anchor">22</span> <span class="del">[20]</span> <span class="del">[18]</span> gauge and depth as indicated.</p>
+      <p><span class="added">Aluminum-Zinc alloy coated</span> <span class="del">[Galvanized]</span> steel sheet conforming to <span class="ref">ASTM A792/A792M</span> and <span class="ref">AISI SG03-3</span>.</p>
+      <p>Individual panels to have continuous length sufficient to cover the entire length of any unbroken roof slope with no joints or seams, formed without warping, waviness, or ripples, and free from damage to the finish coating system.</p>
+      <p>Provide panels with thermal expansion and contraction consistent with the type of system specified, and the following profile: profile to be a <span class="added">2 inch</span> <span class="del">[1-1/2]</span> high standing seam, <span class="added">24 inch</span> <span class="del">[18]</span> coverage with <span class="added">mechanical crimping</span> <span class="del">[ or][ snap-together]</span> seams with concealed clips and fasteners.</p>
+    </div>
+    <div class="panel">
+      <h2>Decisions</h2>
+      <div class="fchips">
+        <span class="fchip">All <span class="n">24</span></span>
+        <span class="fchip on">Brackets <span class="n">6</span></span>
+        <span class="fchip">Fill-ins <span class="n">4</span></span>
+        <span class="fchip">Paragraphing <span class="n">8</span></span>
+        <span class="fchip">Table rows <span class="n">0</span></span>
+        <span class="fchip">Host-nation <span class="n">0</span></span>
+        <span class="fchip">Cleanup <span class="n">0</span></span>
+        <span class="fchip">Drafts <span class="n">0</span></span>
+      </div>
+      <div class="autorow"><span class="fchip">Auto-removed <span class="n">6</span></span></div>
+      <div class="actbar">
+        <span class="actbtn">Accept all <span class="n">5</span></span>
+        <span class="actbtn dis">Clear all <span class="n">0</span></span>
+      </div>
+      <div class="sortrow">SORT <span class="sortsel"><span>Paragraph order</span><span>&#9662;</span></span></div>
+
+      <div class="card">
+        <span class="ctag">BRACKETS</span><span class="ctitle">Energy and Cool Roof Performance — include cool roof option…</span>
+        <div class="copt">Option 0: include</div>
+        <div class="cmeta">PART 2 / SYSTEM DESCRIPTION</div>
+        <div class="cstatus">&#10003; Accepted</div>
+      </div>
+
+      <div class="card sel">
+        <span class="ctag">BRACKETS</span><span class="ctitle">Roll-form steel sheet roof panels to the specified profile, 22 gauge…</span>
+        <div class="copt">Option 2: 22 gauge</div>
+        <div class="cmeta">PART 2 / MATERIALS / Steel Sheet Panels</div>
+        <div class="cbtns">
+          <span class="cbtn accept">&#10003; Accept</span>
+          <span class="cbtn">&#8635; Override</span>
+          <span class="cbtn">&#10074;&#10074; Defer</span>
+          <span class="cbtn rerun">&#9888; Re-run</span>
+        </div>
+        <div class="rationale">
+          <b>AI RATIONALE</b>
+          Design criteria call for a 22 gauge structural profile on the standing-seam roof; lighter gauges do not meet the specified uplift resistance for this wind zone.
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="ctag">BRACKETS</span><span class="ctitle">Aluminum-Zinc alloy coated steel sheet conforming to ASTM A792/A792M…</span>
+        <div class="copt">Option 1: Aluminum-Zinc alloy coated</div>
+        <div class="cmeta">PART 2 / MATERIALS / Steel Sheet Panels</div>
+        <div class="cstatus">&#10003; Accepted</div>
+      </div>
+
+      <div class="card">
+        <span class="ctag">BRACKETS</span><span class="ctitle">profile to be a 2 inch high standing seam, 24 inch coverage with mech…</span>
+        <div class="copt">Option 1: 2 inch / 24 inch / mechanical crimping</div>
+        <div class="cmeta">PART 2 / MATERIALS / Steel Sheet Panels</div>
+        <div class="cstatus">&#10003; Accepted</div>
+      </div>
+
+      <div class="card">
+        <span class="ctag">FILL-INS</span><span class="ctitle">Manufacturer's Finish Warranty — warranty period of 20 years…</span>
+        <div class="copt">Value: 20 years</div>
+        <div class="cmeta">PART 1 / PROJECT CONDITIONS</div>
+        <div class="cstatus">&#10003; Accepted</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

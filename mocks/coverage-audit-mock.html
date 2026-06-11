@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 13.5px; color: #1b1b1b; background: #ffffff;
+    width: 982px; overflow: hidden;
+  }
+  .mono { font-family: Consolas, 'Courier New', monospace; }
+  .page { padding: 18px 22px 10px; }
+  h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .meta { display: flex; gap: 26px; font-size: 12.5px; color: #444; margin-bottom: 14px; }
+  .meta b { color: #1b1b1b; font-weight: 600; }
+  .meta .mono { font-size: 12px; }
+
+  .chips { display: flex; gap: 10px; margin-bottom: 14px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 13px; border-radius: 999px;
+    font-size: 12.5px; font-weight: 600;
+    border: 1px solid #d9d9d9; background: #fff; color: #333;
+  }
+  .chip .n { font-weight: 700; }
+  .chip-covered  { border-color: #b5d6b9; background: #f1f8f1; color: #1e6b2d; }
+  .chip-partial  { border-color: #e3cd9a; background: #fcf6e8; color: #8a6410; }
+  .chip-gap      { border-color: #e7b8b3; background: #fcf0ee; color: #a13327; }
+  .chip-uncertain{ border-color: #d9d9d9; background: #fafafa; color: #555; }
+  .chip-review   { border-color: #9fc0e8; background: #f0f6fd; color: #1b5fa8; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    text-align: left; font-size: 12px; font-weight: 600; color: #666;
+    padding: 8px 10px; border-bottom: 1px solid #e3e3e3;
+  }
+  thead th:nth-child(2), thead th:nth-child(3), thead th:nth-child(4) { text-align: left; }
+  .grp td {
+    background: #f5f6f7; font-weight: 600; font-size: 13px; color: #333;
+    padding: 8px 10px; border-bottom: 1px solid #ececec;
+  }
+  .grp .count {
+    font-family: Consolas, monospace; font-size: 11px; font-weight: 600;
+    color: #777; background: #e9eaec; border-radius: 4px; padding: 1px 7px; margin-left: 10px;
+  }
+  .grp .tw { color: #888; font-size: 10px; margin-right: 8px; }
+  .grp2 td { background: #fafbfc; padding-left: 26px; }
+  .row td { padding: 12px 10px; border-bottom: 1px solid #efefef; vertical-align: top; }
+  .row .req { max-width: 470px; line-height: 1.45; color: #222; }
+  .row .sec { font-family: Consolas, monospace; font-size: 12.5px; color: #333; white-space: nowrap; }
+  .pill {
+    display: inline-block; padding: 3px 11px; border-radius: 999px;
+    font-size: 11.5px; font-weight: 600; white-space: nowrap;
+  }
+  .v-covered { background: #e9f5ea; color: #1e6b2d; }
+  .v-partial { background: #fbf2da; color: #8a6410; }
+  .v-gap     { background: #fbe9e7; color: #a13327; }
+  .sub { display: block; font-size: 11px; color: #999; margin-top: 4px; font-weight: 500; }
+  .imp { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .i-critical { background: #fbe7ec; color: #9c2541; }
+  .i-high     { background: #fbf2da; color: #8a6410; }
+  .i-medium   { background: #eef1f4; color: #51606e; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Coverage Audit</h1>
+  <div class="meta">
+    <span><b>UFGS:</b> 2026-05</span>
+    <span><b>Latest run:</b> <span class="mono">audit-20260611T080214-3c91d2a8</span></span>
+    <span><b>Recorded:</b> 2026-06-11T08:02:14.391Z</span>
+  </div>
+  <div class="chips">
+    <span class="chip chip-covered">Covered <span class="n">241</span></span>
+    <span class="chip chip-partial">Partially covered <span class="n">9</span></span>
+    <span class="chip chip-gap">Likely gap <span class="n">2</span></span>
+    <span class="chip chip-uncertain">Uncertain <span class="n">0</span></span>
+    <span class="chip chip-review">Needs review <span class="n">4</span></span>
+    <span class="chip">Total <span class="n">256</span></span>
+  </div>
+  <table>
+    <thead>
+      <tr><th style="width:482px">Requirement</th><th>Target section</th><th>Verdict</th><th>Importance</th></tr>
+    </thead>
+    <tbody>
+      <tr class="grp"><td colspan="4"><span class="tw">&#9654;</span>Div 01 — General Requirements<span class="count">188</span></td></tr>
+
+      <tr class="grp"><td colspan="4"><span class="tw">&#9660;</span>Div 03 — Concrete<span class="count">3</span></td></tr>
+      <tr class="grp grp2"><td colspan="4"><span class="tw">&#9660;</span><span class="mono">03 30 00</span> — CAST-IN-PLACE CONCRETE<span class="count">3</span></td></tr>
+      <tr class="row">
+        <td class="req">Provide concrete equipment pads and foundations for mechanical equipment as indicated.</td>
+        <td class="sec">03 30 00</td>
+        <td><span class="pill v-covered">Covered</span></td>
+        <td><span class="imp i-high">High</span></td>
+      </tr>
+      <tr class="row">
+        <td class="req">Concrete compressive strength shall be a minimum of 30 MPa at 28 days.</td>
+        <td class="sec">03 30 00</td>
+        <td><span class="pill v-covered">Covered</span></td>
+        <td><span class="imp i-critical">Critical</span></td>
+      </tr>
+      <tr class="row">
+        <td class="req">Curing compounds shall be compatible with the specified floor finish system.</td>
+        <td class="sec">03 30 00</td>
+        <td><span class="pill v-partial">Partially covered</span></td>
+        <td><span class="imp i-medium">Medium</span></td>
+      </tr>
+
+      <tr class="grp"><td colspan="4"><span class="tw">&#9660;</span>Div 07 — Thermal and Moisture Protection<span class="count">2</span></td></tr>
+      <tr class="grp grp2"><td colspan="4"><span class="tw">&#9660;</span><span class="mono">07 41 13</span> — METAL ROOF PANELS<span class="count">2</span></td></tr>
+      <tr class="row">
+        <td class="req">Roof panels shall be factory color finished standing seam with concealed fasteners.</td>
+        <td class="sec">07 41 13</td>
+        <td><span class="pill v-covered">Covered</span></td>
+        <td><span class="imp i-high">High</span></td>
+      </tr>
+      <tr class="row">
+        <td class="req">Provide wind uplift calculations for the roof system signed by a registered professional engineer.</td>
+        <td class="sec">07 41 13</td>
+        <td><span class="pill v-covered">Covered</span></td>
+        <td><span class="imp i-critical">Critical</span></td>
+      </tr>
+
+      <tr class="grp"><td colspan="4"><span class="tw">&#9660;</span>Div 26 — Electrical<span class="count">1</span></td></tr>
+      <tr class="grp grp2"><td colspan="4"><span class="tw">&#9660;</span><span class="mono">26 20 00</span> — INTERIOR DISTRIBUTION SYSTEM<span class="count">1</span></td></tr>
+      <tr class="row">
+        <td class="req">Provide surge protective devices for panelboards serving sensitive electronic equipment.</td>
+        <td class="sec">26 20 00</td>
+        <td><span class="pill v-gap">Likely gap</span><span class="sub">Likely True Gap</span></td>
+        <td><span class="imp i-high">High</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
