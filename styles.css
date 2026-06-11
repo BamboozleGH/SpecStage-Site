@@ -1099,15 +1099,27 @@ html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease
   html.js .decide-band.reveal.in .sd-badge { animation: none; }
 }
 
-/* ── Ask the Library showcase ─────────────────────────────────────── */
+/* ── Product showcases (Ask the Library / Coverage Audit) ─────────── */
 .atl-band {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  grid-template-areas: "copy shot";
   gap: clamp(36px, 5vw, 80px);
   align-items: center;
 }
+.atl-copy { grid-area: copy; }
+.atl-shot { grid-area: shot; }
+/* Mirrored variant — image on the left. */
+.atl-band.flip {
+  grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
+  grid-template-areas: "shot copy";
+}
+.atl-band.flip .atl-shot { justify-self: start; }
 @media (max-width: 920px) {
-  .atl-band { grid-template-columns: 1fr; }
+  .atl-band, .atl-band.flip {
+    grid-template-columns: 1fr;
+    grid-template-areas: "copy" "shot";
+  }
   .atl-shot { max-width: 520px; }
 }
 .atl-copy .section-h { max-width: 520px; }
@@ -1144,6 +1156,21 @@ html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease
   background: var(--paper);
 }
 .atl-shot figcaption {
+  margin-top: 14px;
+  font-size: 13px; color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Full-width product shot (View Spec) */
+.shot-wide { margin: 12px 0 0; }
+.shot-wide img {
+  width: 100%; height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.10);
+  background: var(--paper);
+}
+.shot-wide figcaption {
   margin-top: 14px;
   font-size: 13px; color: var(--muted);
   line-height: 1.5;
