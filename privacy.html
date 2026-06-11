@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0a0a0a">
 
   <title>Privacy | SpecStage</title>
-  <meta name="description" content="How SpecStage handles data on this website.">
+  <meta name="description" content="How SpecStage handles data — on this website and in the application.">
   <link rel="canonical" href="https://www.specstage.com/privacy">
   <meta name="robots" content="noindex">
 
@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
 
-  <link rel="stylesheet" href="/styles.css?v=74">
+  <link rel="stylesheet" href="/styles.css?v=75">
 
   <script>window.GA_MEASUREMENT_ID = 'G-NXYJVHPJW2';</script>
 </head>
@@ -44,7 +44,7 @@
       <div class="wrap hero-inner">
         <span class="hero-eyebrow"><svg class="eyebrow-mark" viewBox="0 0 22 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1" y="0" width="2.4" height="18"/><rect x="1" y="0" width="6" height="2.4"/><rect x="1" y="15.6" width="6" height="2.4"/><rect x="18.6" y="0" width="2.4" height="18"/><rect x="15" y="0" width="6" height="2.4"/><rect x="15" y="15.6" width="6" height="2.4"/><rect x="10" y="5" width="2" height="6"/><rect x="7" y="13" width="8" height="2"/></svg> Legal</span>
         <h1 style="font-size:clamp(36px,5vw,56px)">Privacy</h1>
-        <p>Last updated: 2026-04-29</p>
+        <p>Last updated: 2026-06-11</p>
       </div>
     </section>
 
@@ -64,8 +64,8 @@
         </ul>
 
         <h2>How the SpecStage application handles your project files</h2>
-        <p>SpecStage does not operate a backend server. Project documents you load into the application — RFPs, design criteria, drawings, UFGS master sections — are stored locally on your machine and are not uploaded to or retained by SpecStage.</p>
-        <p>To generate tailoring recommendations, the application sends the minimum content needed for each decision (relevant text excerpts, project context, and the specification section under review) to its AI model provider, Anthropic. Anthropic's API terms specify that inputs sent through the API are not used to train their models.</p>
+        <p>SpecStage is a desktop application. Project files, UFGS masters, exports, and decision logs remain on your machine.</p>
+        <p>For AI-assisted analysis, SpecStage sends only the minimum required excerpts and project context (relevant text excerpts and the specification section under review) through a secured inference service to the AI model provider, Anthropic. SpecStage does not store project documents or tailored outputs on its servers; service logs are limited to request metadata — such as timestamps, request sizes, and account identifiers — not document content. Anthropic's commercial API terms specify that inputs sent through the API are not used to train their models.</p>
         <p>All AI outputs are returned to your local machine for engineer review and approval before any export. Decision logs and tailored output files are written locally; we do not receive copies.</p>
 
         <h2>Cookies</h2>
@@ -123,6 +123,6 @@
     </div>
   </div>
 
-  <script src="/site.js?v=74" defer></script>
+  <script src="/site.js?v=75" defer></script>
 </body>
 </html>

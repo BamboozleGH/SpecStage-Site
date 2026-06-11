@@ -1199,6 +1199,12 @@ html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease
 .trust-item p {
   font-size: 14.5px; color: var(--ink-soft); line-height: 1.65;
 }
+.trust-more {
+  margin-top: 36px;
+  font-size: 14px; color: var(--muted);
+}
+.trust-more a { text-decoration: underline; color: var(--ink-soft); }
+.trust-more a:hover { color: var(--ink); }
 
 /* ── CTA band ─────────────────────────────────────────────────────── */
 .cta-band {
