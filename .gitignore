@@ -9,3 +9,4 @@ node_modules/
 
 # local mobile-review captures
 mocks/_mobile/
+mocks/_topbar-*.png
