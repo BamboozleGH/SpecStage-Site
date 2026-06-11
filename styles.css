@@ -413,6 +413,24 @@ img, svg { display: block; max-width: 100%; }
   color: var(--ink-soft); max-width: 640px; margin-bottom: 56px;
 }
 
+/* ── Dark section band (Why this matters) ─────────────────────────── */
+/* Full-bleed ink band right after the hero — the "problem" statement
+   gets its own visual register, and the light "What it does" section
+   that follows reads as the answer. */
+.section-dark { background: var(--ink); color: var(--paper); }
+.section-dark .section-eyebrow { color: rgba(255, 255, 255, 0.55); }
+.section-dark .section-eyebrow::before,
+.section-dark .section-eyebrow::after { color: rgba(255, 255, 255, 0.3); }
+.section-dark .section-h { color: var(--paper); }
+.section-dark .section-lead { color: rgba(255, 255, 255, 0.72); }
+.section-dark .pain-grid li {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+}
+.section-dark .pain-num { color: rgba(255, 255, 255, 0.45); }
+.section-dark .section-closer { color: var(--paper); }
+.section-dark ::selection { background: var(--paper); color: var(--ink); }
+
 /* ── "Why this matters" pain grid ─────────────────────────────────── */
 /* Compact two-column grid of spec-numbered tasks. Column-major flow so
    numbering reads down the left column (1.1–1.4) then down the right
@@ -1079,6 +1097,75 @@ html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease
   html.js .decide-band.reveal.in .sd-removed .sd-text::after,
   html.js .decide-band.reveal.in .sd-removed .sd-pnum::after,
   html.js .decide-band.reveal.in .sd-badge { animation: none; }
+}
+
+/* ── Ask the Library showcase ─────────────────────────────────────── */
+.atl-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  gap: clamp(36px, 5vw, 80px);
+  align-items: center;
+}
+@media (max-width: 920px) {
+  .atl-band { grid-template-columns: 1fr; }
+  .atl-shot { max-width: 520px; }
+}
+.atl-copy .section-h { max-width: 520px; }
+.atl-points {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.atl-points li {
+  position: relative;
+  padding-left: 26px;
+  font-size: clamp(15px, 1.2vw, 17px);
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.atl-points li::before {
+  content: '';
+  position: absolute; left: 2px; top: 7px;
+  width: 8px; height: 8px;
+  border: 2px solid var(--ink);
+  border-top: none; border-right: none;
+  transform: rotate(-45deg) translateY(-2px);
+  opacity: 0.75;
+}
+.atl-shot {
+  margin: 0;
+  justify-self: end;
+  width: 100%;
+}
+.atl-shot img {
+  width: 100%; height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.10);
+  background: var(--paper);
+}
+.atl-shot figcaption {
+  margin-top: 14px;
+  font-size: 13px; color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── Desktop / data-handling trust strip ──────────────────────────── */
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  margin-top: 16px;
+  max-width: 1160px;
+}
+@media (max-width: 880px) {
+  .trust-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+.trust-item h3 {
+  font-size: 17px; font-weight: 700; letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.trust-item p {
+  font-size: 14.5px; color: var(--ink-soft); line-height: 1.65;
 }
 
 /* ── CTA band ─────────────────────────────────────────────────────── */
