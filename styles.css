@@ -413,10 +413,23 @@ img, svg { display: block; max-width: 100%; }
   color: var(--ink-soft); max-width: 640px; margin-bottom: 56px;
 }
 
-/* ── Dark section band (Why this matters) ─────────────────────────── */
-/* Full-bleed ink band right after the hero — the "problem" statement
-   gets its own visual register, and the light "What it does" section
-   that follows reads as the answer. */
+/* ── Dark band (Why this matters) ─────────────────────────────────── */
+/* Same format as the CTA bands: inset, rounded, bracket corners — so
+   every dark surface on the site speaks the same language. */
+.why-band {
+  border-radius: var(--radius);
+  margin: 0 var(--pad-x);
+  padding: clamp(56px, 8vw, 92px) var(--pad-x);
+  position: relative; overflow: hidden;
+}
+.why-band::before, .why-band::after {
+  content: ''; position: absolute; top: 20px; bottom: 20px; width: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+}
+.why-band::before { left: 20px; border-right: none; }
+.why-band::after  { right: 20px; border-left: none; }
+.why-band-inner { max-width: var(--max); margin: 0 auto; }
 .section-dark { background: var(--ink); color: var(--paper); }
 .section-dark .section-eyebrow { color: rgba(255, 255, 255, 0.55); }
 .section-dark .section-eyebrow::before,
