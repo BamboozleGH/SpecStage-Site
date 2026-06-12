@@ -557,10 +557,11 @@ img, svg { display: block; max-width: 100%; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(28px, 4vw, 64px);
-  padding: 30px 34px;
+  padding: 30px 38px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--paper-soft);
+  max-width: 1200px; /* wide enough that each item sits on one line on desktop */
 }
 @media (max-width: 720px) {
   .fit-grid { grid-template-columns: 1fr; gap: 28px; }
