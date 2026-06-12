@@ -587,6 +587,12 @@ img, svg { display: block; max-width: 100%; }
 .fit-list-yes li::before { content: '\2713'; color: #1a7a3e; }
 .fit-list-no  li::before { content: '\2715'; color: #c0392b; opacity: 0.65; }
 .fit-list a { text-decoration: underline; }
+/* Tight hero variant: the fit panel sits right under the lead line. */
+.hero-tight { padding-bottom: clamp(20px, 3vw, 36px); }
+.fit-note {
+  margin-top: 16px;
+  font-size: 14px; color: var(--muted); line-height: 1.5;
+}
 
 /* ── Beta application form (request-access page) ──────────────────── */
 /* The .apply-content wrapper holds the form to a comfortable reading
