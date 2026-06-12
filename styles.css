@@ -119,6 +119,12 @@ img, svg { display: block; max-width: 100%; }
   .topbar-inner { padding: 0 4px 0 10px; }
   .brand-logo { height: 24px; }
 }
+/* Very narrow phones: the logo is the Home link; drop the redundant
+   nav entry so four-items-plus-Apply fits without overflow. */
+@media (max-width: 344px) {
+  .nav > a[href="/"]:not(.btn) { display: none; }
+  .nav > a:not(.btn):nth-of-type(2) { margin-left: auto; }
+}
 
 /* ── Buttons ──────────────────────────────────────────────────────── */
 .btn {
@@ -433,6 +439,15 @@ img, svg { display: block; max-width: 100%; }
 .why-band::before { left: 20px; border-right: none; }
 .why-band::after  { right: 20px; border-left: none; }
 .why-band-inner { max-width: var(--max); margin: 0 auto; }
+/* On phones the 20px content padding collides with the 20px bracket
+   inset, so the corners cut through the text. Drop the brackets and
+   tighten the band instead. */
+@media (max-width: 720px) {
+  .why-band::before, .why-band::after,
+  .cta-band::before, .cta-band::after { display: none; }
+  .why-band { margin: 0 14px; padding: 44px 24px; }
+  .cta-band { margin: 0 14px; }
+}
 .section-dark { background: var(--ink); color: var(--paper); }
 .section-dark .section-eyebrow { color: rgba(255, 255, 255, 0.55); }
 .section-dark .section-eyebrow::before,
@@ -804,7 +819,7 @@ img, svg { display: block; max-width: 100%; }
 
 .apply-after {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 32px;
   margin-top: 24px;
   padding-top: 32px;
@@ -842,6 +857,7 @@ img, svg { display: block; max-width: 100%; }
   background: var(--paper); padding: 36px 32px;
   display: flex; flex-direction: column;
   transition: background .25s var(--ease);
+  min-width: 0; /* grid items refuse to shrink below content otherwise */
 }
 .card:hover { background: var(--paper-soft); }
 /* Accent rule that draws across the top of a card on hover — the same
@@ -1168,6 +1184,11 @@ html.js .stage.stage-active .stage-chips li { opacity: 1; transform: none; }
 .spec-demo.demo-live .sd-opt {
   transition: color .25s var(--ease), background-color .25s var(--ease), opacity .25s var(--ease);
 }
+/* Long option chips (e.g. "Aluminum-Zinc alloy coated") must wrap on
+   very narrow phones instead of clipping at the demo's edge. */
+@media (max-width: 380px) {
+  .spec-demo .sd-opt { white-space: normal; }
+}
 .sd-hint {
   font-family: 'Zen Kaku Gothic New', -apple-system, 'Segoe UI', system-ui, sans-serif;
   font-size: 12.5px; color: var(--muted);
@@ -1459,6 +1480,12 @@ html.js .decide-band.reveal.in .sd-badge { animation: sd-badge-in .5s var(--ease
 .cookie-actions button.primary { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 .cookie-actions button:hover { background: rgba(255,255,255,0.1); }
 .cookie-actions button.primary:hover { background: #f0f0f0; }
+
+/* Mobile-only line break helper (e.g. "You decide." onto its own line). */
+.br-mobile { display: inline; }
+@media (max-width: 640px) {
+  .br-mobile { display: block; }
+}
 
 /* ── Reveal-on-scroll ─────────────────────────────────────────────── */
 /* Hidden states are gated behind html.js (set first thing in site.js)

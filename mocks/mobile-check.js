@@ -16,6 +16,9 @@ const pages = [
   { url: '/', name: 'index' },
   { url: '/how-it-works', name: 'hiw' },
   { url: '/request-access', name: 'apply' },
+  { url: '/about', name: 'about' },
+  { url: '/faq', name: 'faq' },
+  { url: '/beta-terms', name: 'terms' },
 ];
 
 app.whenReady().then(() => {

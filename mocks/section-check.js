@@ -5,7 +5,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const [, , pgPath = '/how-it-works', scrollY = '600', outName = '_section.png'] = process.argv;
+const [, , pgPath = '/how-it-works', scrollY = '600', outName = '_section.png', vw = '1366', vh = '900'] = process.argv;
 const root = path.join(__dirname, '..');
 const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png' };
 
@@ -22,7 +22,7 @@ app.whenReady().then(() => {
     res.end(fs.readFileSync(f));
   });
   srv.listen(8129, async () => {
-    const win = new BrowserWindow({ show: false, width: 1366, height: 900, frame: false, useContentSize: true, webPreferences: { offscreen: true } });
+    const win = new BrowserWindow({ show: false, width: Number(vw), height: Number(vh), frame: false, useContentSize: true, webPreferences: { offscreen: true } });
     await win.loadURL('http://localhost:8129' + pgPath);
     await win.webContents.executeJavaScript(
       `document.documentElement.style.scrollBehavior='auto';
