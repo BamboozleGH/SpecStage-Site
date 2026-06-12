@@ -416,6 +416,7 @@ img, svg { display: block; max-width: 100%; }
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 700; line-height: 1.1; letter-spacing: -0.025em;
   margin-bottom: 20px; max-width: 720px;
+  text-wrap: balance; /* no single-word orphan lines ("...never / says.") */
 }
 .section-lead {
   font-size: clamp(16px, 1.4vw, 19px); line-height: 1.55;
