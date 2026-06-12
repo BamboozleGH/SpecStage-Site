@@ -588,7 +588,8 @@ img, svg { display: block; max-width: 100%; }
 .fit-list-no  li::before { content: '\2715'; color: #c0392b; opacity: 0.65; }
 .fit-list a { text-decoration: underline; }
 /* Tight hero variant: the fit panel sits right under the lead line. */
-.hero-tight { padding-bottom: clamp(20px, 3vw, 36px); }
+.hero-tight { padding-bottom: clamp(16px, 2.5vw, 28px); }
+.hero-tight .hero-inner p:last-child { margin-bottom: 0; }
 .fit-note {
   margin-top: 16px;
   font-size: 14px; color: var(--muted); line-height: 1.5;
@@ -972,22 +973,30 @@ img, svg { display: block; max-width: 100%; }
   display: flex; flex-wrap: wrap; gap: 9px;
   align-content: center;
 }
+/* Each stage cycles through a hue from the product's own palette
+   (link blue, ADD green, caution amber, SI-reference magenta); the
+   icon sits in a tinted tile so the tags read as features, not pills. */
+.stages .stage:nth-child(4n+1) { --chip-accent: #1763c4; --chip-tint: rgba(23, 99, 196, 0.10); }
+.stages .stage:nth-child(4n+2) { --chip-accent: #1a7a3e; --chip-tint: rgba(26, 122, 62, 0.11); }
+.stages .stage:nth-child(4n+3) { --chip-accent: #8a6410; --chip-tint: rgba(176, 125, 18, 0.13); }
+.stages .stage:nth-child(4n+4) { --chip-accent: #a3279c; --chip-tint: rgba(181, 23, 158, 0.09); }
 .stage-chips li {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 15px 8px 12px;
-  border: 1px solid var(--line); border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 15px 6px 6px;
+  border: 1px solid var(--line); border-radius: 9px;
   background: var(--paper);
   font-size: 13px; font-weight: 500; color: var(--ink-soft);
   transition: opacity .45s var(--ease), transform .45s var(--ease), border-color .45s var(--ease);
 }
 .stage-chips li svg {
-  width: 15px; height: 15px; flex-shrink: 0;
-  fill: none; stroke: var(--muted);
+  width: 28px; height: 28px; flex-shrink: 0;
+  padding: 6px;
+  border-radius: 6px;
+  background: var(--chip-tint, rgba(0, 0, 0, 0.05));
+  fill: none; stroke: var(--chip-accent, var(--ink));
   stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
-  transition: stroke .4s var(--ease);
 }
 .stage.stage-active .stage-chips li { border-color: #cfcfcf; }
-.stage.stage-active .stage-chips li svg { stroke: var(--ink); }
 html.js .stage .stage-chips li { opacity: 0; transform: translateY(8px); }
 html.js .stage.stage-active .stage-chips li { opacity: 1; transform: none; }
 .stage-chips li:nth-child(2) { transition-delay: .06s; }
