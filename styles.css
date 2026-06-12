@@ -552,6 +552,41 @@ img, svg { display: block; max-width: 100%; }
   border-radius: 50%;
 }
 
+/* ── Good fit / not yet a fit (request-access) ────────────────────── */
+.fit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  padding: 30px 34px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-soft);
+}
+@media (max-width: 720px) {
+  .fit-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+.fit-label {
+  font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.fit-label-yes { color: #1a5a2e; }
+.fit-label-no  { color: #8a2820; }
+.fit-list { list-style: none; padding: 0; margin: 0; }
+.fit-list li {
+  position: relative;
+  padding: 7px 0 7px 28px;
+  font-size: 15px; color: var(--ink-soft); line-height: 1.5;
+}
+.fit-list li::before {
+  position: absolute; left: 0; top: 7px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-weight: 700;
+}
+.fit-list-yes li::before { content: '\2713'; color: #1a7a3e; }
+.fit-list-no  li::before { content: '\2715'; color: #c0392b; opacity: 0.65; }
+.fit-list a { text-decoration: underline; }
+
 /* ── Beta application form (request-access page) ──────────────────── */
 /* The .apply-content wrapper holds the form to a comfortable reading
    width but is left-aligned (no auto-margin), so it shares the same

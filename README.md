@@ -42,6 +42,13 @@ python -m http.server 8080
 
 Replace `G-XXXXXXXXXX` in the four HTML files (search the codebase for that string) with your GA4 measurement ID. The cookie banner gates the GA4 loader — if the user declines, no GA script is loaded.
 
+## Build marker
+
+`/version.txt` carries the current asset version (the `?v=NN` cache-buster) and
+date, served with `Cache-Control: no-store`. Bump it together with the
+cache-busters on every content push — it lets anyone confirm which build the
+edge is serving and ends stale-cache debates.
+
 ## Editing copy
 
 Page copy lives directly in the HTML files. Headlines have keyword research baked in (UFGS, SpecsIntact, MILCON, federal construction specifications) — change with care to preserve SEO positioning.
